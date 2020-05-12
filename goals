@@ -1,0 +1,25 @@
+...roughly in priority order
+chk-acquire server
+chk-nginx
+chk-github and ayvex, jade, halite
+chk-one domain name from google, one from elsewhere (if feasible)
+chk--two static web services separated by domain, plus the default
+chk--nginx and ssl (certbot)
+chk--no firewall yet  alternate ports in generate ufw
+chk--stun/turn
+---(we are here)---
+--host ayvex first demo (game/busines VR system, multi-paradigm movement* )
+--host ayvex second demo (VR world, with goals of: inworld authoring aka magic, animated transport from "stations"**, progressive render, shared world authoring in github)
+--try other relays and transports....rtsp or somethign like that (ngrok?)
+--host realfaces for tech evaluation and for friends and family 
+
+??-maybe second server one to play with nginx and one for "live"
+
+
+
+Non-
+* multiparadigm movement is that you can move relative to where you are, or relative to the main object of attention.  e..g if you are watching the stage and slide right, you keep focussed on the stage.  You decide to move "normal" or "orbit" some object of attention (just like you decide to "strafe" or "rotate" in regular movements, by using different keys.  this demo has this motion worked out with good keyboard shortcuts, full 3d motion (include up/down). 
+
+** if all transport is free and immediate to everywhere, everywhere becomes right next to everywhere else and everywhere seems like nowhere.
+this is highly undesireable. people go to great lengths to add distance.  we should encourage short distances to be walked so people experience the space as space. and even if you "ZIP" or "Skyhook" somewhere, it animates you thru the distance instead of just "appear there".  Should ideally be like "going to light speed"...but smaller effect the less distance you are going.
+

@@ -59,13 +59,21 @@ let sendData = (data) => {
 let pc;
 let localStream;
 let remoteStreamElement = document.querySelector('#remoteStream');
-
+let localStreamElement  = document.querySelector('#localStream' );
 let getLocalStream = () => {
     log("point2");
     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
 	.then((stream) => {
 	    log('Stream found');
 	    localStream = stream;
+	    localStreamElement.srcObject = stream;
+	    localStreamElement.play();
+
+	    //console.log('Got stream with constraints:', constraints);
+	    //console.log(`Using video device: ${videoTracks[0].label}`);
+
+
+	    
 	    // Connect after making sure that local stream is availble
 	    socket.connect();
 	    log('did we connect point3');

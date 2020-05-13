@@ -16,21 +16,25 @@
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 ##
 
-# Default server configuration
-#
+
+
+
+
 server {
-	listen 80 ;
-	listen [::]:80 ;
+	listen 80;
+	listen [::]:80;
 
 	# SSL configuration
-	
+	#
 	listen 443 ssl ;
 	listen [::]:443 ssl ;
 
-	ssl    on;
-	ssl_certificate    /etc/letsencrypt/live/second.ayvexllc.com/fullchain.pem;
-	ssl_certificate_key    /etc/letsencrypt/live/second.ayvexllc.com/privkey.pem;
 
+	ssl    on;
+	ssl_certificate    /etc/letsencrypt/live/three.panjea.net/fullchain.pem;
+	ssl_certificate_key    /etc/letsencrypt/live/three.panjea.net/privkey.pem;
+
+	#
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
 	#
@@ -42,13 +46,13 @@ server {
 	#
 	# include snippets/snakeoil.conf;
 
-	#root /var/www/second;
-	root /root/gitstuff/kaolin/www-second;
+	#root /var/www/three;
+	root /root/gitstuff/kaolin/www-three;
 
 	# Add index.php to the list if you are using PHP
-	index index.html index.htm ;
+	index index.html index.htm index.nginx-debian.html;
 
-	server_name second.ayvexllc.com;
+	server_name three.panjea.net;
 
 	location / {
 		# First attempt to serve request as file, then

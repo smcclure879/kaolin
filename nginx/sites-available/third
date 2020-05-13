@@ -28,8 +28,8 @@ server {
 	listen [::]:443 ssl ;
 
 	ssl    on;
-	ssl_certificate    /etc/letsencrypt/live/second.ayvexllc.com/fullchain.pem;
-	ssl_certificate_key    /etc/letsencrypt/live/second.ayvexllc.com/privkey.pem;
+	ssl_certificate    /etc/letsencrypt/live/thirdayvexllc.com/fullchain.pem;
+	ssl_certificate_key    /etc/letsencrypt/live/third.ayvexllc.com/privkey.pem;
 
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
@@ -42,13 +42,13 @@ server {
 	#
 	# include snippets/snakeoil.conf;
 
-	#root /var/www/second;
-	root /root/gitstuff/kaolin/www-second;
+	#root /var/www/third;
+	root /root/gitstuff/kaolin/www-third;
 
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm ;
 
-	server_name second.ayvexllc.com;
+	server_name third.ayvexllc.com;
 
 	location / {
 		# First attempt to serve request as file, then

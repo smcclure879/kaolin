@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Communicator</title>
+</head>
+<body>
+
+  <audio id="localStream" autoplay controls muted></audio>
+  
+
+  <audio id="remoteStream" autoplay controls></audio>
+  
+  <script> 
+    let streamType={ audio: true, video: false };
+  </script>
+  <br/>
+  <i style="font-size:11px">all rights reserved, Kaolin Partnership/Ayvex</i>
+  <br/>
+  <textarea id="log" cols="80" rows="10"></textarea>
+
+  <script src="socket.io.js"></script>
+  <script src="videoTest.js"></script>
+</body>
+</html>

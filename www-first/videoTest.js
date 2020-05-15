@@ -31,7 +31,7 @@ log(""+PC_CONFIG.iceServers[0].urls);
 
 // Signaling methods
 let socket = io(SIGNALING_SERVER_URL, { autoConnect: false });
-log("point1" + socket.url);
+log("point1");
 socket.on('data', (data) => {
     log('Data received: ',data);
     handleSignalingData(data);
@@ -55,24 +55,35 @@ let sendData = (data) => {
     socket.emit('data', data);
 };
 
+
+function dumps(x) {
+    return JSON.stringify(x);
+}
+
+
+
 // WebRTC methods
 let pc;
 let localStream;
 let remoteStreamElement = document.querySelector('#remoteStream');
 let localStreamElement  = document.querySelector('#localStream' );
-let getLocalStream = () => {
+let getLocalStream = (streamType) => {
     log("point2");
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-	.then((stream) => {
-	    log('Stream found');
-	    localStream = stream;
-	    localStreamElement.srcObject = stream;
-	    localStreamElement.play();
+    log(dumps(streamType));
 
+    navigator.mediaDevices.getUserMedia(streamType).then(
+	(stream) => {
+	    log("localString="+stream.id);
+	    log('point A');
+	    localStream = stream;
+	    //if (streamType.video=='true') {
+	    localStreamElement.srcObject = stream;
+	    log('point B');
+	    if (streamType.video)
+		localStreamElement.play();
+	    //}
 	    //console.log('Got stream with constraints:', constraints);
 	    //console.log(`Using video device: ${videoTracks[0].label}`);
-
-
 	    
 	    // Connect after making sure that local stream is availble
 	    socket.connect();
@@ -154,4 +165,8 @@ let handleSignalingData = (data) => {
 };
 
 // Start connection
-getLocalStream();
+
+window.onload = (evt) => {
+    if (typeof streamType == 'undefined')  streamType={audio:true,video:true};
+    getLocalStream(streamType);
+}

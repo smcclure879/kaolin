@@ -1,5 +1,5 @@
 // Config variables: change them to point to your own servers
-const SIGNALING_SERVER_URL = 'https://first.ayvexllc.com:4000/'; // 'http://localhost:9999';
+const SIGNALING_SERVER_URL = 'https://first.ayvexllc.com:3001/';
 const TURN_SERVER_URL = 'first.ayvexllc.com:3478'; // do not include turn:  why???
 //also  maybe use  'stun.l.google.com:19302' // 'localhost:3478';
 const TURN_SERVER_USERNAME = 'user';

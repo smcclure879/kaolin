@@ -1,1 +1,18 @@
-this is the site THIRD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebRTC working example</title>
+</head>
+<body>
+  <input id="roomName"></input><input type="button" id="roomButton"/>
+  <video id="localStream" muted></video>
+  <video id="remoteStream" autoplay playsinline></video>
+
+  
+  <textarea id="log" cols="80" rows="10"></textarea>
+
+  <script src="socket.io.js"></script>
+  <script src="videoTest.js"></script>
+</body>
+</html>

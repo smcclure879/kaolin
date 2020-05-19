@@ -18,6 +18,15 @@
 
 # Default server configuration
 #
+# Expires map
+map $sent_http_content_type $expires {
+        default                    -1;   #bugbug off
+	#        text/html                  epoch;
+	#	 text/css                   max;
+	#	 application/javascript     max;
+	#	 ~image/                    max;
+}
+		    
 server {
 	# SSL configuration
 	
@@ -27,6 +36,8 @@ server {
 	ssl    on;
 	ssl_certificate    /etc/letsencrypt/live/third.ayvexllc.com/fullchain.pem;
 	ssl_certificate_key    /etc/letsencrypt/live/third.ayvexllc.com/privkey.pem;
+
+	expires $expires;
 
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
@@ -39,13 +50,18 @@ server {
 	#
 	# include snippets/snakeoil.conf;
 
-	#root /var/www/third;
-	root /root/gitstuff/kaolin/www-third;
+
 
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm ;
 
 	server_name third.ayvexllc.com;
+
+
+	location ~ "/[a-z]{4,8}$" {
+		 default_type text/html;		 
+		 alias /root/gitstuff/kaolin/www-third/index.html;
+	}
 
 	location / {
 		# First attempt to serve request as file, then
@@ -53,6 +69,8 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
+	#root /var/www/third;
+	root /root/gitstuff/kaolin/www-third;
 }
 
 server {

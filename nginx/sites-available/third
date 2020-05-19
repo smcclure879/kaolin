@@ -58,7 +58,7 @@ server {
 	server_name third.ayvexllc.com;
 
 
-	location ~ "/[a-z]{4,8}$" {
+	location ~ "/[a-z]{3,16}$" {
 		 default_type text/html;		 
 		 alias /root/gitstuff/kaolin/www-third/index.html;
 	}

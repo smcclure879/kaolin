@@ -187,9 +187,20 @@ let maybeRoom = window.location.pathname;
 //     room = document.querySelector("#roomName").value;
 //     setRoom();
 // }
+function isValidColor(strColor) {
+    var s = new Option().style;
+    s.color = strColor;
+    
+    // return 'false' if color wasn't assigned
+    return s.color == strColor.toLowerCase();
+}
 
-if (/^\/[a-z]{4,8}$/.test(maybeRoom)){
+if (/^\/[a-z]{3,16}$/.test(maybeRoom)){
     room=maybeRoom;
+    var roomColor=room.substr(1);
+    if (isValidColor(roomColor)){
+	document.body.style.backgroundColor=roomColor;
+    }
     main();
 }else{
     alert("bad room");

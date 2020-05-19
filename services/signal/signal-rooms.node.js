@@ -25,7 +25,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('thisRoom', (newRoom) => {
-	//bugbug verify room OK
+	//skip color test entirely....we don't care...any room name is ok, we just don't color it.
+	if (! /^\/[a-z]{3,16}$/.test(newRoom)) {
+	    log("bad room test:"+newRoom);
+	    return;
+	}
 	newRoom=newRoom.substr(1);  //bugbug slash
 	socket.leave(room);
 	room=newRoom;

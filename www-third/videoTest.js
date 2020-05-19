@@ -51,12 +51,11 @@ let setRoom = () => {
 	alert('you need to pick a room. setRoom');
 	return;
     }
-    sendData({
-	type:'thisRoom',
-	roomName:room
-    });
+    socket.emit('thisRoom',room);
 };
 
+
+//should go server:whichRoom? client:thisRoom! server:ready!
 
 //bugbug did not work...
 socket.on('ready', onReadyOrConnect);

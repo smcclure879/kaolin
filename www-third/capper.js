@@ -6,131 +6,108 @@
  *  tree.
  
 
-with many mods by kaolin partners/ayvex
+ with many mods by kaolin partners/ayvex
 
 */
 
 class Capper {
-  constructor() {
+    constructor() {
+	this.capStart = document.querySelector("#capStart");
+	capStart.disabled=false;
+	
+	this.capStop = document.querySelector("#capStop");
+	capStop.disabled = true;
+
+	this.capStat = document.querySelector("#capStat");
+	this.capStat.innerText = 'Inactive';
+
+	this.stream = null;
+	this.chunks = [];
+
+	//this.enableDownloadRecording = false;
+	//this.mediaRecorder = null;
+	//this.recording = null;
+    }
+
+    setStatus(x) {
+	this.capStat.innerText = x;
+    }
+
+    startScreenCapture() {  //static ?  bugbug
+	if (navigator.getDisplayMedia) {
+	    return navigator.getDisplayMedia({video: true});
+	} else if (navigator.mediaDevices.getDisplayMedia) {
+	    return navigator.mediaDevices.getDisplayMedia({video: true});
+	} else {
+	    return navigator.mediaDevices.getUserMedia({video: {mediaSource: 'screen'}});
+	}
+    }
+
+    async startCapturing(e) {
+	log('Start capturing.');
+	this.setStatus('Screen recording started.');
+	this.capStart.disabled=true;
+	this.capStop.enabled=false;
+
+	/*if (this.recording) {
+	  window.URL.revokeObjectURL(this.recording);
+	  }*/
+
+	this.chunks = [];
+	this.recording = null;
+	this.stream = await this.startScreenCapture();
+	this.stream.addEventListener('inactive', e => {
+	    log('Capture stream inactive - stop recording!');
+	    this.stopCapturing(e);
+	});
+	/*this.mediaRecorder = new MediaRecorder(this.stream, {mimeType: 'video/webm'});
+	  this.mediaRecorder.addEventListener('dataavailable', event => {
+	  if (event.data && event.data.size > 0) {
+          this.chunks.push(event.data);
+	  }
+	  });
+	  this.mediaRecorder.start(10);
+	*/
+    }
     
-    this.enableStartCapture = true;
-    this.enableStopCapture = false;
-    this.enableDownloadRecording = false;
-    this.stream = null;
-    this.chunks = [];
-    this.mediaRecorder = null;
-    this.status = 'Inactive';
-    this.recording = null;
-  }
+    stopCapturing(e) {
+	log('Stop capturing.');
+	this.setStatus( 'Screen recorded completed.' );
+	this.capStart.disabled=false;
+	this.capStop.disabled =true;
+	
+	//this.enableDownloadRecording = true;
+	//this.mediaRecorder.stop();
+	//this.mediaRecorder = null;
+	
+	this.stream.getTracks().forEach(track => track.stop());
+	this.stream = null;
 
-    /*  static get properties() {
-    return {
-      status: String,
-      enableStartCapture: Boolean,
-      enableStopCapture: Boolean,
-      enableDownloadRecording: Boolean,
-      recording: {
-        type: {
-          fromAttribute: input => input
-        }
-      }
-    };
-  }
-
- render() {
-    return html`<style>
-@import "../../../css/main.css";
-:host {
-  display: block;
-  padding: 10px;
-  width: 100%;
-  height: 100%;
-}
-video {
-    --video-width: 100%;
-    width: var(--video-width);
-    height: calc(var(--video-width) * (16 / 9));
-}
-</style>
-<video ?controls="${this.recording !== null}" playsinline autoplay loop muted .src="${this.recording}"></video>
-<div>
-<p>Status: ${this.status}</p>
-<button ?disabled="${!this.enableStartCapture}" @click="${e => this._startCapturing(e)}">Start screen capture</button>
-<button ?disabled="${!this.enableStopCapture}" @click="${e => this._stopCapturing(e)}">Stop screen capture</button>
-<button ?disabled="${!this.enableDownloadRecording}" @click="${e => this._downloadRecording(e)}">Download recording</button>
-<a id="downloadLink" type="video/webm" style="display: none"></a>
-</div>`;
-  }
-*/
-
-  static _startScreenCapture() {
-    if (navigator.getDisplayMedia) {
-      return navigator.getDisplayMedia({video: true});
-    } else if (navigator.mediaDevices.getDisplayMedia) {
-      return navigator.mediaDevices.getDisplayMedia({video: true});
-    } else {
-      return navigator.mediaDevices.getUserMedia({video: {mediaSource: 'screen'}});
-    }
-  }
-
-  async _startCapturing(e) {
-    console.log('Start capturing.');
-    this.status = 'Screen recording started.';
-    this.enableStartCapture = false;
-    this.enableStopCapture = true;
-    this.enableDownloadRecording = false;
-    this.requestUpdate('buttons');
-
-    if (this.recording) {
-      window.URL.revokeObjectURL(this.recording);
+	//this.recording = window.URL.createObjectURL(new Blob(this.chunks, {type: 'video/webm'}));
     }
 
-    this.chunks = [];
-    this.recording = null;
-    this.stream = await ScreenSharing._startScreenCapture();
-    this.stream.addEventListener('inactive', e => {
-      console.log('Capture stream inactive - stop recording!');
-      this._stopCapturing(e);
-    });
-    this.mediaRecorder = new MediaRecorder(this.stream, {mimeType: 'video/webm'});
-    this.mediaRecorder.addEventListener('dataavailable', event => {
-      if (event.data && event.data.size > 0) {
-        this.chunks.push(event.data);
-      }
-    });
-    this.mediaRecorder.start(10);
-  }
+    /*downloadRecording(e) {
+      log('Download recording.');
+      this.enableStartCapture = true;
+      this.enableStopCapture = false;
+      this.enableDownloadRecording = false;
 
-  _stopCapturing(e) {
-    console.log('Stop capturing.');
-    this.status = 'Screen recorded completed.';
-    this.enableStartCapture = true;
-    this.enableStopCapture = false;
-    this.enableDownloadRecording = true;
-
-    this.mediaRecorder.stop();
-    this.mediaRecorder = null;
-    this.stream.getTracks().forEach(track => track.stop());
-    this.stream = null;
-
-    this.recording = window.URL.createObjectURL(new Blob(this.chunks, {type: 'video/webm'}));
-  }
-
-  /*_downloadRecording(e) {
-    console.log('Download recording.');
-    this.enableStartCapture = true;
-    this.enableStopCapture = false;
-    this.enableDownloadRecording = false;
-
-    const downloadLink = this.shadowRoot.querySelector('a#downloadLink');
-    downloadLink.addEventListener('progress', e => console.log(e));
-    downloadLink.href = this.recording;
-    downloadLink.download = 'screen-recording.webm';
-    downloadLink.click();
-  }*/
+      const downloadLink = this.shadowRoot.querySelector('a#downloadLink');
+      downloadLink.addEventListener('progress', e => log(e));
+      downloadLink.href = this.recording;
+      downloadLink.download = 'screen-recording.webm';
+      downloadLink.click();
+      }*/
 }
 
 //customElements.define('screen-sharing', ScreenSharing);
 document.querySelector("#capStart").onclick= (e) => {
-    document.querySelector("#capStatus").innerText=this.status;
+    log("capper");
+    capper.startCapturing();
 };
+
+
+var capper = new Capper();
+document.querySelector("#capStart").capper=capper;
+
+

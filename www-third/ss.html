@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>thinice</title>
+
+    <style>
+        display: block;
+        padding: 10px;
+        bugbugwidth: 100%;
+        bugbugheight: 100%;
+      }
+      video {
+        bugbug--video-width: 100%;
+        bugbugwidth: var(--video-width);
+        bugbugheight: calc(var(--video-width) * (16 / 9));
+      }
+    </style>
+
+</head>
+<body>
+
+  <textarea id="log" cols="80" rows="10" width="400"></textarea>
+
+  
+  <video id="remoteScreen2" controls playsinline autoplay loop muted ></video>  <!--.src="${this.recording}" bugbug-->
+  <div>
+    <p>Status: <span id="capStatus"></span></p>
+    <button id="capStart" disabled="true">share</button><!--click="${e => this._startCapturing(e)}">Start screen capture</button  bugbug-->
+    <button id="capStop" disabled="true">stop</button> <!--click="${e => this._stopCapturing(e)}">Stop screen capture</button  bugbug-->
+    <!--button disabled="true" @click="${e => this._downloadRecording(e)}">Download recording</button-->
+    <!--a id="downloadLink" type="video/webm" style="display: none"></a    bugbug-->
+  </div>
+
+  <hr>  
+
+  <video id="localStream" muted width="400"></video>
+  <video id="remoteStream" autoplay playsinline width="400"></video>
+
+
+
+  <script src="socket.io.js"></script>
+  <script src="capper.js"></script>
+  <script src="videoTestCap.js"></script>
+</body>
+</html>

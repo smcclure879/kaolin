@@ -37,7 +37,6 @@ async def data(sid, data):
     await sio.emit('data', data, room=room, skip_sid=sid)
 
 listenPort = 'fail'
-room = 'room'
 
 if __name__ == '__main__':
     listenPort = int(sys.argv[1])

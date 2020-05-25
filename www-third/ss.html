@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>thinice</title>
 
-    <style>
+    <!--  <style>
+      bugbug {
         display: block;
         padding: 10px;
         bugbugwidth: 100%;
@@ -15,7 +16,7 @@
         bugbugwidth: var(--video-width);
         bugbugheight: calc(var(--video-width) * (16 / 9));
       }
-    </style>
+    </style>-->
 
 </head>
 <body>
@@ -23,7 +24,7 @@
   <textarea id="log" cols="80" rows="10" width="400"></textarea>
 
   
-  <video id="remoteScreen2" controls playsinline autoplay loop muted ></video>  <!--.src="${this.recording}" bugbug-->
+ two: <video id="remoteStream2" controls playsinline autoplay loop muted ></video>  <!--.src="${this.recording}" bugbug-->
   <div>
     <p>Status: <span id="capStat"></span></p>
     <button id="capStart" disabled="true">share</button><!--click="${e => this._startCapturing(e)}">Start screen capture</button  bugbug-->
@@ -34,8 +35,8 @@
 
   <hr>  
 
-  <video id="localStream" muted width="400"></video>
-  <video id="remoteStream" autoplay playsinline width="400"></video>
+  local:<video id="localStream" muted width="400"></video>
+  one:<video id="remoteStream" autoplay playsinline width="400"></video>
 
 
 

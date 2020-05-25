@@ -26,7 +26,18 @@ const PC_CONFIG = {
 
 
 
-const log =  x =>  {    document.querySelector("#log").value += (x+"\n");   }
+const dumps = JSON.stringify;
+const shorten = (L,x) => {
+    if (typeof x == 'undefined') {
+	return 'UnDeFiNeD';
+    } else {
+	x=dumps(x);
+	return x.length<L ?  x : x.substr(0,L);
+    }
+};
+const log =  x =>  {    document.querySelector("#log").value += (x+"\n");   } ;
+const log2 = (x,y) => { log( x + shorten(30,y)); } ;
+
 //log(""+PC_CONFIG.iceServers[0].urls);
 
 // Signaling methods
@@ -72,8 +83,9 @@ let sendData = (data) => {
 let pc;
 let localStream;
 let remoteStreamElement = document.querySelector('#remoteStream');
+let remoteStreamElement2 = document.querySelector('#remoteStream2');
 let localStreamElement  = document.querySelector('#localStream' );
-let getLocalStream = () => {
+const getLocalStream = () => {
     log("point2");
     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
 	.then((stream) => {
@@ -81,6 +93,11 @@ let getLocalStream = () => {
 	    localStream = stream;
 	    localStreamElement.srcObject = stream;
 	    localStreamElement.play();
+
+	    
+	    
+	    //bugbug did this work for screen cap??
+	    activateCapper(stream);
 
 	    //console.log('Got stream with constraints:', constraints);
 	    //console.log(`Using video device: ${videoTracks[0].label}`);
@@ -99,12 +116,21 @@ let createPeerConnection = () => {
 	log("bugbug2228a");
 	pc = new RTCPeerConnection(PC_CONFIG);
 	log("bugbug2228b");
+	
 	pc.onicecandidate = onIceCandidate;
-	pc.onaddstream = onAddStream;
+		
+	pc.onconnectionstatechange = ev => { log2("-------connChange:",ev);  } ; 
+	pc.onaddstream             = ev => { log2("------bugbug1434j=",ev);  onAddStream(ev) };
+	//mozilla claims to want....but probls in chrome....
+	pc.ontrack                 = ev => { log2("-------ontrack,bugbug1709i",ev.streams); onAddTrack(ev); };  
+	//pc.addEventListener("track", ev => { log2("-------trackEvt,bugbug2020m,streams=",ev.streams);   /*onTrack(ev);*/	});
+	
 	pc.addStream(localStream);
+
 	log('PeerConnection created');
+
     } catch (error) {
-	log('PeerConnection failed: ', error);
+	log('******** PeerConnection failed: ', error);
     }
 };
 
@@ -134,22 +160,28 @@ let setAndSendLocalDescription = (sessionDescription) => {
 
 let onIceCandidate = (event) => {
     if (event.candidate) {
-	log('ICE candidate');
+	log('sending ICE candidate');
 	sendData({
 	    type: 'candidate',
 	    candidate: event.candidate
 	});
     }
 };
-
-let onAddStream = (event) => {
-    log('Add stream');
+//bugbug let --> const for all fn's !!!!
+//bugbug who should be calling this?  what event ?  went to see
+const onAddStream = (event) => {
+    
+    log2('-----bugbug1650b Add stream (better not be nothing):',event.stream.id);
     remoteStreamElement.srcObject = event.stream;
+    //remoteStreamElement2.play();
 };
-const dumps = JSON.stringify;
+const onAddTrack = ev => {
+    log2('------addTrack bugbug2341a',ev.track.id);
+    remoteStreamElement2.srcObject = ev.track.stream; 
+};
 
-let handleSignalingData = (data) => {
-    log("bugbug1555a"+dumps(data).substr(0,20));
+const handleSignalingData = (data) => {
+    log2("bugbug1555a:",data);
     switch (data.type) {
     case 'offer':
 	createPeerConnection();

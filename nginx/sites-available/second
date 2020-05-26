@@ -18,6 +18,15 @@
 
 # Default server configuration
 #
+# Expires map
+map $sent_http_content_type $expires {
+        default                    -1;   #bugbug off
+	#        text/html                  epoch;
+	#	 text/css                   max;
+	#	 application/javascript     max;
+	#	 ~image/                    max;
+}
+
 server {
 
 	# SSL configuration
@@ -48,6 +57,11 @@ server {
 
 	server_name second.ayvexllc.com;
 
+	location ~ "/[a-z]{3,16}$" {
+		 default_type text/html;		 
+		 alias /root/gitstuff/kaolin/www-second/cap/ss.html;
+	}
+
 	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
@@ -65,3 +79,5 @@ server {
 
        return 301 https://$server_name$request_uri;
 }
+
+

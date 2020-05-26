@@ -224,7 +224,9 @@ const onAddTrack = ev => {
 
 
 const addResizeEvents =  () => {
-    localStream.addEventListener('loadedmetadata', function() {
+   /*bugbug never worked
+
+     localStream.addEventListener('loadedmetadata', function() {
 	log(`Local video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
     });
 
@@ -238,7 +240,7 @@ const addResizeEvents =  () => {
     remoteStream.addEventListener('resize', () => {
 	log(`Remote video size changed to ${remoteVideo.videoWidth}x${remoteVideo.videoHeight}`);
     });
-
+   */
 };
 
 const handleSignalingData = (data) => {

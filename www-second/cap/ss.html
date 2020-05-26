@@ -20,6 +20,8 @@
 
   </head>
   <body>
+    remote:<video id="remoteStream" autoplay playsinline ></video>
+    <hr>
     <table border="1"><tr>
 	<td>
 	  <textarea id="log" cols="80" rows="10" width="400"></textarea>
@@ -33,11 +35,15 @@
 	    <!--button disabled="true" @click="${e => this._downloadRecording(e)}">Download recording</button-->
 	    <!--a id="downloadLink" type="video/webm" style="display: none"></a    bugbug-->
 	  </div>
-    </td></tr></table>
+	</td>
+	<td>
+	  local:<video id="localStream" muted></video>
+	</td>
+    </tr></table>
     <hr>  
 
-    local:<video id="localStream" muted></video>
-    remote:<video id="remoteStream" autoplay playsinline ></video>
+
+
 
 
 

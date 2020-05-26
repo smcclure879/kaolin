@@ -5,15 +5,15 @@ const log = console.log;
 const io = require('socket.io')(listenPort);
 
 
-io.on('connection', (socket) => {    
+io.on('connection', (socket) => {
 
     log('Connected '+socket.id + "   " + dumps(socket.request.connection.remoteAddress) );
 
-    //we shouldn't answer calls from not our server, this'll change later.  
+    //we shouldn't answer calls from not our server, this'll change later.
     if (socket.request.connection.remoteAddress != '::ffff:127.0.0.1' ) {
         socket.close();
     }
-    
+
     socket.on('disconnect', () => {
 	socket.leave(room);
 	log('Disconnected ' + socket.id)

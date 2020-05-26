@@ -1,12 +1,14 @@
 // Config variables: change them to point to your own servers
-//REUGLAR-------const SIGNALING_SERVER_URL = 'https://third.ayvexllc.com:3003/'; // this needs be your domain    
-const SIGNALING_SERVER_URL = 'https://third.ayvexllc.com:3003/'; // this needs be your domain    
-const TURN_SERVER_URL = 'first.ayvexllc.com:3478'; // this can be not your domain do not include turn:  why???
-//also  maybe use  'stun.l.google.com:19302' // 'localhost:3478';
+//REUGLAR-------const SIGNALING_SERVER_URL = 'https://third.ayvexllc.com:3003/'; // this needs be your domain	 
+const SIGNALING_SERVER_URL = 'https://third.ayvexllc.com:3003/'; // this needs be your domain	 
+const TURN_SERVER_URL = 'first.ayvexllc.com:3478'; // this can be not your domain do not include turn:	why???
+//also	maybe use  'stun.l.google.com:19302' // 'localhost:3478';
 const TURN_SERVER_USERNAME = 'user';
 const TURN_SERVER_CREDENTIAL = 'pazz';
 
-var room = '--uninit--';
+
+let maybeRoom = window.location.pathname;
+
 // WebRTC config: you don't have to change this for the example to work
 // If you are testing on localhost, you can just use PC_CONFIG = {}
 const PC_CONFIG = {
@@ -35,8 +37,9 @@ const shorten = (L,x) => {
 	return x.length<L ?  x : x.substr(0,L);
     }
 };
-const logText = document.querySelector("#log");
-const log =  x =>  {    logText.value += (x+"\n");    logText.scrollTop = logText.scrollHeight;    } ;
+const grab = document.getElementById.bind(document);
+const logText = grab("log");
+const log =  x =>  {	logText.value += (x+"\n");    logText.scrollTop = logText.scrollHeight;	   } ;
 const log2 = (x,y) => { log( x + " " + shorten(40,y)); } ;
 //bugbugconst dom = document.querySelector;
 
@@ -44,274 +47,284 @@ const log2 = (x,y) => { log( x + " " + shorten(40,y)); } ;
 
 
 
-function onReadyOrConnect() {
-    log('Ready.point7');
-    // Connection with signaling server is ready, and so is local stream
-    createPeerConnection();
-    log('pc created. point9  bugbug');
-    sendOffer();
-}
+class Kale {
+    constructor(roomName,localElementName,remoteElementName,logElementName){
+
+	this.logText = grab(logElementName);
+	if ( this.logText == null ) throw "bad logElementName";
+
+	this.localStreamElement	 = grab(localElementName);
+	if ( this.localStreamElement == null )	throw "bad localElementName";
+	this.remoteStreamElement = grab(remoteElementName);
+	if ( this.remoteStreamElement == null ) throw "bad remoteElementName";
 
 
-
-let setRoom = () => {
-    if (!room) {
-	alert('you need to pick a room. setRoom');
-	return;
-    }
-    socket.emit('thisRoom',room);
-};
-
-//SPEC for how the dialog works.......   server:whichRoom?     client:thisRoom!      server:ready!
-
-let socket = null;
-// Signaling methods
-const initSocket = () => {
-    socket = io(SIGNALING_SERVER_URL, { autoConnect: false });
-    socket.on('data', (data) => {
-	log('Data received: ',data);
-	handleSignalingData(data);
-    });
-
-    //bugbug did not work...
-    socket.on('ready', onReadyOrConnect);
-    //socket.on('connect', onReadyOrConnect );  //bugbug added
-    socket.on('connect_error', (err) => { log('did we get here.point5?'+err); } );  //bugbug added
-    socket.on('error', (err) => { log('did we get here.point6?'+err); } );  //bugbug added
-    socket.on('whichRoom', setRoom );
-    sendData =  (data) => {
-	log("sending"+dumps(data).substr(0,40));
-	socket.emit('data', data);
-    };
-};
-
-
-// WebRTC methods
-let pc = null;
-let localStream = null;
-let remoteStream = null;
-let remoteStreamElement = document.querySelector('#remoteStream');
-//let remoteStreamElement2 = document.querySelector('#remoteStream2');
-let localStreamElement  = document.querySelector('#localStream' );
-
-const streamGetter = (streamType) => {
-    if (streamType=='mic')
-	return navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    else if (streamType=='cam')
-	return navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-    else if (streamType=='cap')
-	return navigator.mediaDevices.getDisplayMedia({ video: true });
-    else
-	throw "unknown stream type:"+streamType;
-};
-
-const startEverything = (streamType) => {
-    initSocket();
-    log("point2");
-    streamGetter(streamType)
-	.then((stream) => {
-	    log('Stream found');
-	    localStream = stream;
-	    localStreamElement.srcObject = stream;
-	    localStreamElement.play();
-
-	    
-
-	    //bugbug did this work for screen cap??
-	    //activateCapper(stream);
-
-	    //console.log('Got stream with constraints:', constraints);
-	    //console.log(`Using video device: ${videoTracks[0].label}`);
-
-	    // Connect after making sure that local stream is availble
-	    socket.connect();
-	    log('did we connect point3');
-	})
-	.catch(error => {
-	    log('Stream not found: ', error);
-	});
-}
-
-let createPeerConnection = () => {
-    try {
-	log("bugbug2228a");
-	pc = new RTCPeerConnection(PC_CONFIG);
-	log("bugbug2228b");
+	//this is a logging FUNCTION.  so you can 
+	this.log =  x => {    this.logText.value += (x+"\n");	 this.logText.scrollTop = this.logText.scrollHeight;	} ;
+	this.log2= (x,y) => {  this.log( x +" "+ shorten(40, y));  } ;
+	this.log3= (x,y) => {  this.log( x +" "+ shorten(1200,y)); } ;
+	this.room=roomName;
+	//bugbug share validation with the caller ???
 	
-	pc.onicecandidate = onIceCandidate;
-		
-	pc.onconnectionstatechange = ev => { log2("-------connChange:",ev);  } ; 
-	pc.onaddstream             = ev => { log2("------bugbug1434j=",ev);  onAddStream(ev) };
-	//mozilla claims to want....but probls in chrome....
-	pc.ontrack                 = ev => { log2("-------ontrack,bugbug1709i",ev.streams); onAddTrack(ev); };  
-	//pc.addEventListener("track", ev => { log2("-------trackEvt,bugbug2020m,streams=",ev.streams);   /*onTrack(ev);*/	});
-	
-	pc.addStream(localStream);
-
-	log('PeerConnection created');
-
-    } catch (error) {
-	log('******** PeerConnection failed: ', error);
-    }
-};
-
-const teardown =  () => {
-    sendData({type:'leave'});
-    socket.disconnect();
-    localStream = null;
-    //localStreamElement.stop();
-    localStreamElement.srcObject = null;
-    remoteStream = null;
-    remoteStreamElement.srcObject = null;
-
-    pc.onicecandidate = null;
-    pc.onconnectionstatechange = null;
-    pc.onaddstream             = null;
-    pc.ontrack                 = null;
-    pc.close();	
-
-}
-
-let sendOffer = () => {
-    log('Send offer');
-    pc.createOffer().then(
-	setAndSendLocalDescription,
-	(error) => { log('Send offer failed: ', error); }
-    );
-};
-
-let sendAnswer = () => {
-    log('Send answer');
-    pc.createAnswer().then(
-	setAndSendLocalDescription,
-	(error) => { ('Send answer failed: ', error); }
-    );
-};
-
-let setAndSendLocalDescription = (sessionDescription) => {
-    log('bugbug2237b');
-    pc.setLocalDescription(sessionDescription);
-    log('Local description set');
-    sendData(sessionDescription);
-};
-
-
-let onIceCandidate = (event) => {
-    if (event.candidate) {
-	log('sending ICE candidate');
-	sendData({
-	    type: 'candidate',
-	    candidate: event.candidate
-	});
-    }
-};
-//bugbug let --> const for all fn's !!!!
-//bugbug who should be calling this?  what event ?  went to see
-const onAddStream = (event) => {
-    //bugbug is this a remote or local stream??? 
-    log2('-----bugbug1650b Add stream (better not be nothing):',event.stream.id);
-    remoteStream = event.stream;
-    remoteStreamElement.srcObject = remoteStream;
-    //remoteStreamElement2.play();
-    addResizeEvents();
-};
-const onAddTrack = ev => {
-    log2('------addTrack bugbug2341a',ev.track.id);
-    remoteStream = ev.track.stream;
-    remoteStreamElement.srcObject = remoteStream;
-    addResizeEvents(); // cannot do this remoteStream is still null why???
-};
-
-
-const addResizeEvents =  () => {
-   /*bugbug never worked
-
-     localStream.addEventListener('loadedmetadata', function() {
-	log(`Local video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
-    });
-
-
-    if (!remoteStream) return;
-    
-    remoteStream.addEventListener('loadedmetadata', function() {
-	console.log(`Remote video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
-    });
-    
-    remoteStream.addEventListener('resize', () => {
-	log(`Remote video size changed to ${remoteVideo.videoWidth}x${remoteVideo.videoHeight}`);
-    });
-   */
-};
-
-const handleSignalingData = (data) => {
-    log2("bugbug1555a:",data);
-    switch (data.type) {
-    case 'offer':
-	createPeerConnection();
-	pc.setRemoteDescription(new RTCSessionDescription(data));
-	addResizeEvents();
-	sendAnswer();
-	break;
-    case 'answer':
-	log('got answer bugbug2238c');
-	pc.setRemoteDescription(new RTCSessionDescription(data));
-	addResizeEvents();
-	break;
-    case 'candidate':
-	log('got ice candidate bugbug2238d');
-	pc.addIceCandidate(new RTCIceCandidate(data.candidate));
-	addResizeEvents();
-	break;
-    case 'whichRoom':
-	log('was asked whichRoom'+room);  //bugbug get from UI?  this is during startup only?
-	addResizeEvents();
-	setRoom();
-    }
-};
-
-
-function isValidColor(strColor) {
-    var s = new Option().style;
-    s.color = strColor;
-    
-    // return 'false' if color wasn't assigned
-    return s.color == strColor.toLowerCase();
-}
-
-function main(maybeRoom,streamType) {
-    
-    if (/^\/[a-z]{3,16}$/.test(maybeRoom)){
-	room=maybeRoom;
-	var roomColor=room.substr(1);
-	if (isValidColor(roomColor)){
+	var roomColor=this.room.substr(1);
+	if (Kale.isValidColor(roomColor)){
 	    document.body.style.backgroundColor=roomColor;
 	}
 	
-	startEverything(streamType);  //mic(rophone),cam(era),cap(ture)  PICK ONE
-	
-    }else{
-	alert("bad room name");
+	this.pc = null;
+	this.socket = null;
+	this.localStream = null;
+	this.remoteStream = null;
+
     }
 
+    static streamGetter(streamType){
+	if (streamType=='mic')
+	    return navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+	else if (streamType=='cam')
+	    return navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+	else if (streamType=='cap')
+	    return navigator.mediaDevices.getDisplayMedia({ video: true });
+	else
+	    throw "unknown stream type:"+streamType;
+    };
+
+    
+    setRoom(){
+	//SPEC for how the dialog works.......	 server:whichRoom?     client:thisRoom!	     server:ready!
+	if (!this.socket) {
+	    this.log("bad call to setRoom with no socket"+new Error().stack);
+	    return;
+	}
+	this.log("setting room");
+	this.socket.emit('thisRoom',this.room);
+    }
+
+    
+    onReadyOrConnect() {
+	this.log('Ready.point7');
+	// Connection with signaling server is ready, and so is local stream
+	this.createPeerConnection();
+	this.log('pc created. point9  bugbug');
+	this.sendOffer();
+    }
+
+
+    initSocket(){
+	this.socket = io(SIGNALING_SERVER_URL, { autoConnect: false });
+	this.socket.on('data', (data) => {
+	    this.log('Data received: ',data);
+	    this.handleSignalingData(data);
+	});
+
+	this.socket.on('ready', this.onReadyOrConnect.bind(this));	 //bugbug does this ever get called?
+	//this.socket.on('connect', this.onReadyOrConnect );  //bugbug added
+	this.socket.on('connect_error', (err) => { this.log('did we get here.point5?'+err); } );  //bugbug added
+	this.socket.on('error', (err) => { this.log('did we get here.point6?'+err); } );  //bugbug added
+	this.socket.on('whichRoom', (ev)=>{  this.setRoom();  });
+
+    }
+
+    sendData(data){
+	this.log("sending"+dumps(data).substr(0,40));
+	this.socket.emit('data', data);
+    };
+
+
+    
+    
+    startEverything(streamType){
+	this.initSocket();
+	this.log("point2");
+	Kale.streamGetter(streamType)
+	    .then((stream) => {
+		this.log('Stream found');
+		this.localStream = stream;
+		this.localStreamElement.srcObject = stream;
+		this.localStreamElement.play();
+
+		this.socket.connect();
+		this.log('did we connect point3');
+	    })
+	    .catch(error => {
+		this.log('bugbug0619z:Stream not found: ', error);
+	    });
+    }
+
+    createPeerConnection(){
+	try {
+	    this.log("bugbug2228a");
+	    this.pc = new RTCPeerConnection(PC_CONFIG);
+	    this.log("bugbug2228b");
+	    
+	    this.pc.onicecandidate = this.onIceCandidate.bind(this);
+	    this.log("bugbug2228c");
+	    this.pc.onconnectionstatechange = ev => { log2("-------connChange:",ev);  } ; 
+	    this.pc.onaddstream		    = ev => { log2("------bugbug1434j=",ev);  this.onAddStream(ev) };
+	    //mozilla claims to want....but probls in chrome....
+	    this.pc.ontrack		    = ev => { log2("-------ontrack,bugbug1709i",ev.streams); this.onAddTrack(ev); };	 
+	    //this.pc.addEventListener("track", ev => { log2("-------trackEvt,bugbug2020m,streams=",ev.streams);   /*onTrack(ev);*/	});
+	    this.log("bugbug2228d");
+	    this.pc.addStream(this.localStream);
+	    
+	    this.log('PeerConnection created');
+
+	} catch (error) {
+	    this.log3('******** PeerConnection failed: ', new Error().stack);
+	    this.log2('** ** err continues', error);
+	}
+    }
+
+    teardown(){
+	this.sendData({type:'leave'});
+	this.socket.disconnect();
+	this.localStream = null;
+	//this.localStreamElement.stop();
+	this.localStreamElement.srcObject = null;
+	this.remoteStream = null;
+	this.remoteStreamElement.srcObject = null;
+
+	if (this.pc) {
+	    this.pc.onicecandidate = null;
+	    this.pc.onconnectionstatechange = null;
+	    this.pc.onaddstream		= null;
+	    this.pc.ontrack			= null;
+	    this.pc.close();
+	}
+	this.pc = null;
+
+    }
+    
+    sendOffer(){
+	this.log('Send offer');
+	this.pc.createOffer().then(
+	    this.setAndSendLocalDescription.bind(this),
+	    (error) => { this.log('Send offer failed: ', error); }
+	);
+    }
+
+    sendAnswer(){
+	this.log('Send answer');
+	this.pc.createAnswer().then(
+	    this.setAndSendLocalDescription.bind(this),
+	    (error) => { this.log2('Send answer failed: ', error); }
+	);
+    }
+
+    setAndSendLocalDescription(sessionDescription){
+	this.log('bugbug2237b');
+	this.pc.setLocalDescription(sessionDescription);
+	this.log('Local description set');
+	this.sendData(sessionDescription);
+    };
+
+
+    onIceCandidate(event){
+	if (event.candidate) {
+	    this.log('sending ICE candidate');
+	    this.sendData({
+		type: 'candidate',
+		candidate: event.candidate
+	    });
+	}
+    }
+    
+    //bugbug let --> const for all fn's !!!!
+    //bugbug who should be calling this?  what event ?	went to see
+    onAddStream(event){
+	//bugbug is this a remote or local stream??? 
+	this.log2('-----bugbug1650b Add stream (better not be nothing):',event.stream.id);
+	this.remoteStream = event.stream;
+	this.remoteStreamElement.srcObject = this.remoteStream;
+	//remoteStreamElement2.play();
+	this.addResizeEvents();
+    }
+    
+    onAddTrack(ev){
+	this.log2('------addTrack bugbug2341a',ev.track.id);
+	this.remoteStream = ev.track.stream;
+	this.remoteStreamElement.srcObject = this.remoteStream;
+	this.addResizeEvents(); // cannot do this remoteStream is still null why???
+    }
+
+
+    addResizeEvents(){
+	/*bugbug never worked
+	  
+	  localStream.addEventListener('loadedmetadata', function() {
+	  log(`Local video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
+	  });
+	  
+	  if (!remoteStream) return;
+	  
+	  remoteStream.addEventListener('loadedmetadata', function() {
+	  console.log(`Remote video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
+	  });
+	  
+	  remoteStream.addEventListener('resize', () => {
+	  log(`Remote video size changed to ${remoteVideo.videoWidth}x${remoteVideo.videoHeight}`);
+	  });
+	*/
+    }
+
+    handleSignalingData(data){
+	this.log2("bugbug1555a:",data);
+	switch (data.type) {
+	case 'offer':
+	    this.createPeerConnection();
+	    this.pc.setRemoteDescription(new RTCSessionDescription(data));
+	    this.addResizeEvents();
+	    this.sendAnswer();
+	    break;
+	case 'answer':
+	    this.log('got answer bugbug2238c');
+	    this.pc.setRemoteDescription(new RTCSessionDescription(data));
+	    this.addResizeEvents();
+	    break;
+	case 'candidate':
+	    this.log('got ice candidate bugbug2238d');
+	    this.pc.addIceCandidate(new RTCIceCandidate(data.candidate));
+	    this.addResizeEvents();
+	    break;
+	case 'whichRoom':
+	    this.log('was asked whichRoom'+room);  //bugbug get from UI?  this is during startup only?
+	    this.addResizeEvents();
+	    this.setRoom();
+	    break;
+	default:
+	    this.log2( "unknown data type", dumps(data) );
+	    return;
+	}
+    }
+
+    static isValidColor(strColor) {
+	let s = new Option().style;
+	s.color = strColor;
+	return s.color == strColor.toLowerCase();  //color change of invisible object only takes if valid color	 bugbug how to allow more colors like number codes or richer color names 
+    }
+
+    main(maybeRoom,streamType) {
+	if (! /^\/[a-z]{3,16}$/.test(maybeRoom)) throw "bad room name";
+	this.room=maybeRoom;
+	this.startEverything(streamType);  //mic(rophone),cam(era),cap(ture)  PICK ONE
+    }
 }
 
 
-
-
-let maybeRoom = '/olive'; //bugbug supposed to be:  window.location.pathname;
-let capStart = document.querySelector('#capStart');
+let capStart = document.getElementById('capStart');
+let k = new Kale(maybeRoom,"localStream","remoteStream","log");
 
 capStart.addEventListener("click", (ev) => {
-    teardown();
+    k.teardown();
     alert("bugbug-cap");
     capStart.disabled=true;
     capStop.disabled=false;
-    setTimeout(  ()=>{main(maybeRoom,'cap');},  3000  );
+    setTimeout(	 ()=>{k.main(maybeRoom,'cap');},  3000	);
 } );
 
 document.addEventListener("DOMContentLoaded", (ev) => {
     capStart.disabled=false;
     capStop.disabled=true;
-    main(maybeRoom,'cam');
+    k.main(maybeRoom,'cam');
 });
 

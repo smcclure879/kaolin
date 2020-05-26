@@ -20,14 +20,11 @@
 
   </head>
   <body>
-    remote:<video id="remoteStream" autoplay playsinline ></video>
-    <hr>
     <table border="1"><tr>
-	<td>
-	  <textarea id="log" cols="80" rows="10" width="400"></textarea>
+	<td>	
+	  remote:<video id="remoteStream" autoplay playsinline ></video>
 	</td>
 	<td>
-	  <!--two: <video id="remoteStream2" controls playsinline autoplay loop muted ></video>  <!--.src="${this.recording}" bugbug-->
 	  <div>
 	    <p>Status: <span id="capStat"></span></p>
 	    <button id="capStart" disabled="true">share</button><!--click="${e => this._startCapturing(e)}">Start screen capture</button  bugbug-->
@@ -36,19 +33,19 @@
 	    <!--a id="downloadLink" type="video/webm" style="display: none"></a    bugbug-->
 	  </div>
 	</td>
+      </tr><tr>
+	<td>
+	  <textarea id="log" cols="80" rows="10" width="400"></textarea>
+	</td>
 	<td>
 	  local:<video id="localStream" muted></video>
 	</td>
-    </tr></table>
-    <hr>  
+    </tr></table>    
 
 
 
-
-
-
-    <script src="socket.io.js"></script>
-    <!--script src="capper.js"></script-->
-    <script src="videoTestCap.js"></script>
+    <script src="/cap/socket.io.js"></script>
+    <!--bugbug and the file  script src="/cap/capper.js"></script-->
+    <script src="/cap/videoTestCap.js"></script>
   </body>
 </html>

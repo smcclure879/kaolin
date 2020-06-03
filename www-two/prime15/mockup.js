@@ -68,7 +68,7 @@ function updateSnapshots ()
     for (j=1; j<=countUsers; j++) {
 	thisUserSeries = setUserSeries(j);
 	var snapshot = document.getElementById("user" + j);
-	snapshot.setAttribute("src", "/webcamThumbs/user" + thisUserSeries + "_" + currentSnapshot + ".jpg");
+	snapshot.setAttribute("src", "webcamThumbs/user" + thisUserSeries + "_" + currentSnapshot + ".jpg");
     }
 
     timerSnapshot = setTimeout("updateSnapshots()", 2000);

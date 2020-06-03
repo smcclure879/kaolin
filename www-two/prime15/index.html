@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Panjea Live!</title>
+    <title>Kaolin Center - Scorpions Concert</title>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"><meta content="utf-8" http-equiv="encoding">
 
     <!-- aframe -->
@@ -8,22 +8,21 @@
     <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
 
     <!-- webRTC -->
-    <script src="/js/adapter-latest.js"></script>
+    <script src="js/adapter-latest.js"></script>
     <!-- <script src="/js/webRTC_basic.js"></script> -->
 
     <!-- jquery -->
-    <link href="/js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" />
-    <script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-    <script src="/js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
 
     <script>
     </script>
 
-    <script src="/js/stringFunctions.js"></script>
+    <script src="js/stringFunctions.js"></script>
     <script src="mockup.js"></script>
 
-    <style>
-      
+    <style>      
       .rounded {border-radius: 50% !important}
       .noclose .ui-dialog-titlebar-close {display:none;}
       .notitlebar .ui-dialog-titlebar {display: none;}
@@ -45,12 +44,12 @@
 
       
       <a-assets timeout="1000">
-	<video width="128" height="128" id="videoFile" material="npot: true" autoplay loop="true" src="/media/halseyDrumVideo.mp4" ></video>
+	<video width="128" height="128" id="videoFile" material="npot: true" autoplay loop="true" src="media/halseyDrumVideo.mp4" ></video>
 	<video id="webcam" playsinline></video>
-	<img src="/images/grid_floor.png" id="grid" crossorigin="anonymous">
-	<img src="/images/mute.png" id="muteButton" crossorigin="anonymous">
-	<img src="/images/unmute.png" id="unmuteButton" crossorigin="anonymous">
-	<img src="/images/donate_small.png" id="donateButton" width="75" height="48" crossorigin="anonymous">
+	<img src="images/grid_floor.png" id="grid" crossorigin="anonymous">
+	<img src="images/mute.png" id="muteButton" crossorigin="anonymous">
+	<img src="images/unmute.png" id="unmuteButton" crossorigin="anonymous">
+	<img src="images/donate_small.png" id="donateButton" width="75" height="48" crossorigin="anonymous">
       </a-assets>
 
 <!--#7BD    457-->
@@ -133,7 +132,7 @@
 	<!-- left --><a-box position="-50 30 0" rotation="0 90 0" width="80" height="60" depth="0.001" color="green"></a-box>
 	<!-- right--><a-box position="50 30 0" rotation="0 90 0" width="80" height="60" depth="0.001" color="navy"></a-box>
 	<!-- ceiling--> <a-box position="0 60 0" rotation="90 0 0" width="100" height="100" depth="0.001" color="darkgray"></a-box>
-	<a-image id="logo" position="0 70 0" rotation="0 0 0"  src="/images/panjeaLogo_white.png" width="20" height="20"></a-image>
+	<a-image id="logo" position="0 70 0" rotation="0 0 0"  src="images/panjeaLogo_white.png" width="20" height="20"></a-image>
 
 
 
@@ -145,44 +144,44 @@
 
 
       
-      <a-image id="camera1" position="-2.8 3.0 -3" src="/images/videoCamera1_green.png" width="0.2" height="0.2"></a-image>
-      <a-image id="camera2" position="-2.8 2.8 -3" src="/images/videoCamera2.png" width="0.2" height="0.2"></a-image>
-      <a-image id="camera3" position="-2.8 2.6 -3" src="/images/videoCamera3.png" width="0.2" height="0.2"></a-image>
+      <a-image id="camera1" position="-2.8 3.0 -3" src="images/videoCamera1_green.png" width="0.2" height="0.2"></a-image>
+      <a-image id="camera2" position="-2.8 2.8 -3" src="images/videoCamera2.png" width="0.2" height="0.2"></a-image>
+      <a-image id="camera3" position="-2.8 2.6 -3" src="images/videoCamera3.png" width="0.2" height="0.2"></a-image>
       <a-image id="muteButtons" position="-2.8 3.5 -3" src="#unmuteButton" width="0.2" height="0.2" link="href: javascript:muteVideo()"></a-image>
 
-<!--      <a-image id="arrowLeft" position="-3.1 0.6 -3" link="href: javascript:scrollSnapshots('left')" src="/images/arrow_left.png" width="0.2" height="0.2" link="href: https://www.cnn.com"></a-image>
-      <a-image id="arrowRight" position="3.1 0.6 -3" link="href: javascript:scrollSnapshots('right')" src="/images/arrow_right.png" width="0.2" height="0.2"></a-image>
+<!--      <a-image id="arrowLeft" position="-3.1 0.6 -3" link="href: javascript:scrollSnapshots('left')" src="images/arrow_left.png" width="0.2" height="0.2" link="href: https://www.cnn.com"></a-image>
+      <a-image id="arrowRight" position="3.1 0.6 -3" link="href: javascript:scrollSnapshots('right')" src="images/arrow_right.png" width="0.2" height="0.2"></a-image>
 -->
       <!-- top left -->
-      <a-image id="user1"  position="-2.7 0.7 -3" src="/webcamThumbs/user1_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 1')"></a-image>
-      <a-image id="user2" position="-2.2 0.7 -3" src="/webcamThumbs/user2_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 2')"></a-image>
-      <a-image id="user3" position="-1.7 0.7 -3" src="/webcamThumbs/user3_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 3')"></a-image>
-      <a-image id="user4" position="-1.2 0.7 -3" src="/webcamThumbs/user4_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 4')"></a-image>
-      <a-image id="user5" position="-0.7 0.7 -3" src="/webcamThumbs/user5_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 5')"></a-image>
+      <a-image id="user1"  position="-2.7 0.7 -3" src="webcamThumbs/user1_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 1')"></a-image>
+      <a-image id="user2" position="-2.2 0.7 -3" src="webcamThumbs/user2_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 2')"></a-image>
+      <a-image id="user3" position="-1.7 0.7 -3" src="webcamThumbs/user3_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 3')"></a-image>
+      <a-image id="user4" position="-1.2 0.7 -3" src="webcamThumbs/user4_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 4')"></a-image>
+      <a-image id="user5" position="-0.7 0.7 -3" src="webcamThumbs/user5_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 5')"></a-image>
 
       <!-- bottom left -->
-      <a-image id="user8" position="-2.7 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 1')"></a-image>
-      <a-image id="user9" position="-2.2 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 2')"></a-image>
-      <a-image id="user10" position="-1.7 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 3')"></a-image>
-      <a-image id="user7" position="-1.2 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 4')"></a-image>
-      <a-image id="user6" position="-0.7 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 5')"></a-image>
+      <a-image id="user8" position="-2.7 0.1 -3" rotation="-10 -140 0" src="webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 1')"></a-image>
+      <a-image id="user9" position="-2.2 0.1 -3" rotation="-10 -140 0" src="webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 2')"></a-image>
+      <a-image id="user10" position="-1.7 0.1 -3" rotation="-10 -140 0" src="webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 3')"></a-image>
+      <a-image id="user7" position="-1.2 0.1 -3" rotation="-10 -140 0" src="webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 4')"></a-image>
+      <a-image id="user6" position="-0.7 0.1 -3" rotation="-10 -140 0" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 5')"></a-image>
 
       <!-- middle middle -->
       <a-plane position="0 0.45 -3" width="0.6" height="1.0" material="src: #webcam"></a-plane>
 
       <!-- top right -->
-      <a-image id="user14" position="0.7 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 1')"></a-image>
-      <a-image id="user13" position="1.2 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 2')"></a-image>
-      <a-image id="user11" position="1.7 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 3')"></a-image>
-      <a-image id="user15" position="2.2 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 4')"></a-image>
-      <a-image id="user12" position="2.7 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 5')"></a-image>
+      <a-image id="user14" position="0.7 0.7 -3" rotation="10 140 0" src="webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 1')"></a-image>
+      <a-image id="user13" position="1.2 0.7 -3" rotation="10 140 0" src="webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 2')"></a-image>
+      <a-image id="user11" position="1.7 0.7 -3" rotation="10 140 0" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 3')"></a-image>
+      <a-image id="user15" position="2.2 0.7 -3" rotation="10 140 0" src="webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 4')"></a-image>
+      <a-image id="user12" position="2.7 0.7 -3" rotation="10 140 0" src="webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 5')"></a-image>
 
       <!-- bottom right -->
-      <a-image id="user16" position="0.7 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 1')"></a-image>
-      <a-image id="user19" position="1.2 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 2')"></a-image>
-      <a-image id="user17" position="1.7 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 3')"></a-image>
-      <a-image id="user18" position="2.2 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 4')"></a-image>
-      <a-image id="user20" position="2.7 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 5')"></a-image>
+      <a-image id="user16" position="0.7 0.1 -3" rotation="10 140 0" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 1')"></a-image>
+      <a-image id="user19" position="1.2 0.1 -3" rotation="10 140 0" src="webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 2')"></a-image>
+      <a-image id="user17" position="1.7 0.1 -3" rotation="10 140 0" src="webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 3')"></a-image>
+      <a-image id="user18" position="2.2 0.1 -3" rotation="10 140 0" src="webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 4')"></a-image>
+      <a-image id="user20" position="2.7 0.1 -3" rotation="10 140 0" src="webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 5')"></a-image>
 
       <!-- title -->
       <a-entity position="-3.98 3.5 -3" width="1.80" height="0.6">
@@ -303,56 +302,56 @@
 		  event-set__leave="_event: mouseleave; _target: #dancingText; visible: false"
 		  link="href: javascript:setIamIcon('dancing')">
 	  <a-ring id="dancingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="dancingIcon" src="/images/dancing.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="dancingIcon" src="images/dancing.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="clappingCircle" position="-0.55 0 0" radius="0.1" color="gold"
 		  event-set__enter="_event: mouseenter; _target: #clappingText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #clappingText; visible: false"
 		  link="href: javascript:setIamIcon('clapping')">
 	  <a-ring id="clappingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="clappingIcon" src="/images/clapping.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="clappingIcon" src="images/clapping.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="cheeringCircle" position="-0.33 0 0" radius="0.1" color="cyan"
 		  event-set__enter="_event: mouseenter; _target: #cheeringText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #cheeringText; visible: false"
 		  link="href: javascript:setIamIcon('cheering')">
 	  <a-ring id="cheeringRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="cheeringIcon" src="/images/cheering.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="cheeringIcon" src="images/cheering.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="booingCircle" position="-0.11 0 0" radius="0.1" color="red"
 		  event-set__enter="_event: mouseenter; _target: #booingText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #booingText; visible: false"
 		  link="href: javascript:setIamIcon('booing')">
 	  <a-ring id="booingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="booingIcon" src="/images/booing.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="booingIcon" src="images/booing.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="singingCircle" position="0.11 0 0" radius="0.1" color="lime"
 		  event-set__enter="_event: mouseenter; _target: #singingText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #singingText; visible: false"
 		  link="href: javascript:setIamIcon('singing')">
 	  <a-ring id="singingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="singingIcon" src="/images/singing.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="singingIcon" src="images/singing.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="lighterCircle" position="0.33 0 0" radius="0.1" color="green"
 		  event-set__enter="_event: mouseenter; _target: #lighterText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #lighterText; visible: false"
 		  link="href: javascript:setIamIcon('lighter')">
 	  <a-ring id="lighterRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="lighterIcon" src="/images/lighter.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="lighterIcon" src="images/lighter.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="guitarCircle" position="0.55 0 0" radius="0.1" color="teal"
 		  event-set__enter="_event: mouseenter; _target: #guitarText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #guitarText; visible: false"
 		  link="href: javascript:setIamIcon('guitar')">
 	  <a-ring id="guitarRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="guitarIcon" src="/images/guitar.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="guitarIcon" src="images/guitar.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 	<a-circle id="drumsCircle" position="0.77 0 0" radius="0.1" color="magenta"
 		  event-set__enter="_event: mouseenter; _target: #drumsText; visible: true"
 		  event-set__leave="_event: mouseleave; _target: #drumsText; visible: false"
 		  link="href: javascript:setIamIcon('drums')">
 	  <a-ring id="drumsRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
-	  <a-image id="drumsIcon" src="/images/drums.png" height="0.14" width="0.14"></a-image>
+	  <a-image id="drumsIcon" src="images/drums.png" height="0.14" width="0.14"></a-image>
 	</a-circle>
 
 	<a-text id="dancingText" value="I am Dancing" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: yellow"></a-text>
@@ -396,10 +395,10 @@
     <div id="iconDialogDiv" style="background-color: navy !important; color: white">
       <table border="0" cellspacing="0" cellpadding="0" style="padding-top: 3px; padding-bottom: 3px; border: 1px solid silver" width="100%">
 	<tr align="center">
-	  <td width="25%"><a href="javascript:showIconDiv('chat')" title="View &amp; Submit Chat" onMouseOver="hoverIcon('chat')" onMouseOut="unhoverIcon('chat')"><img src="/images/chat_lime.png" id="chatIcon"></a></td>
-	  <td width="25%"><a href="javascript:showIconDiv('tag')" title="View &amp; Manage Your Tags" onMouseOver="hoverIcon('tag')" onMouseOut="unhoverIcon('tag')"><img src="/images/tag_silver.png" id="tagIcon"></a></td>
-	  <td width="25%"><a href="javascript:showIconDiv('people')" title="Choose People to View" onMouseOver="hoverIcon('people')" onMouseOut="unhoverIcon('people')"><img src="/images/people_silver.png" id="peopleIcon"></a></td>
-	  <td width="25%"><a href="javascript:showIconDiv('settings')" title="Privacy Settings" onMouseOver="hoverIcon('settings')" onMouseOut="unhoverIcon('settings')"><img src="/images/settings_silver.png" id="settingsIcon"></a></td>
+	  <td width="25%"><a href="javascript:showIconDiv('chat')" title="View &amp; Submit Chat" onMouseOver="hoverIcon('chat')" onMouseOut="unhoverIcon('chat')"><img src="images/chat_lime.png" id="chatIcon"></a></td>
+	  <td width="25%"><a href="javascript:showIconDiv('tag')" title="View &amp; Manage Your Tags" onMouseOver="hoverIcon('tag')" onMouseOut="unhoverIcon('tag')"><img src="images/tag_silver.png" id="tagIcon"></a></td>
+	  <td width="25%"><a href="javascript:showIconDiv('people')" title="Choose People to View" onMouseOver="hoverIcon('people')" onMouseOut="unhoverIcon('people')"><img src="images/people_silver.png" id="peopleIcon"></a></td>
+	  <td width="25%"><a href="javascript:showIconDiv('settings')" title="Privacy Settings" onMouseOver="hoverIcon('settings')" onMouseOut="unhoverIcon('settings')"><img src="images/settings_silver.png" id="settingsIcon"></a></td>
 	</tr>
       </table>
 
@@ -415,9 +414,9 @@
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <tr><td colspan="3"><input type="text" id="chatComment" style="width: 250px; margin-bottom: 3px" placeholder="Say something..." onKeyUp="updateChatMessageLength()"></td></tr>
 	  <tr>
-	    <td><a href="javascript:toggleEmoticons()" title="Show Emoji Options" onMouseOver="hoverIcon('emoji')" onMouseOut="unhoverIcon('emoji')"><img id="emojiIcon" src="/images/emoji_silver.png"></a></td>
+	    <td><a href="javascript:toggleEmoticons()" title="Show Emoji Options" onMouseOver="hoverIcon('emoji')" onMouseOut="unhoverIcon('emoji')"><img id="emojiIcon" src="images/emoji_silver.png"></a></td>
 	    <td align="center" style="color: white; font-size: 11px"><span id="chatMessageLength">0</span> of 255</td>
-	    <td align="right"><a href="javascript:submitChat()" title="Submit Chat Message" onMouseOver="hoverIcon('submitChat')" onMouseOut="unhoverIcon('submitChat')"><img id="submitChatIcon" src="/images/submitChat_silver.png"></a></td>
+	    <td align="right"><a href="javascript:submitChat()" title="Submit Chat Message" onMouseOver="hoverIcon('submitChat')" onMouseOut="unhoverIcon('submitChat')"><img id="submitChatIcon" src="images/submitChat_silver.png"></a></td>
 	  </tr>
 	</table>
       </div><!-- /chatDiv -->
@@ -445,7 +444,7 @@
 
 	<div style="margin-top: 10px">
 	  <input type="text" id="tagText" style="width: 150px" placeholder="New Tag..."> 
-	  <a href="javascript:submitTag()" title="Add Tag" onMouseOver="hoverIcon('submitTag')" onMouseOut="unhoverIcon('submitTag')"><img id="submitTagIcon" src="/images/submitChat_silver.png"></a>
+	  <a href="javascript:submitTag()" title="Add Tag" onMouseOver="hoverIcon('submitTag')" onMouseOut="unhoverIcon('submitTag')"><img id="submitTagIcon" src="images/submitChat_silver.png"></a>
 	</div>
       </div><!-- /tagDiv -->
 
@@ -483,7 +482,7 @@
 
       <div id="connectDiv" style="display: none;">
 	<div class="iconTitle">Connect With: <span id="connectWithName"></span></div>
-	<div id="connectWithSnapshot"><img src="/webcamThumbs/user4_5.jpg" height="100" width="60"></div>
+	<div id="connectWithSnapshot"><img src="webcamThumbs/user4_5.jpg" height="100" width="60"></div>
 
 	<form name="formConnect">
 	  Invite to:<br />

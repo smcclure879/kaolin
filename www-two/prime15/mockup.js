@@ -234,12 +234,11 @@ function openCam(n) {
         
 }
 
-//bugbug all of this angle repointing (rotation) doesn't work as advertised.
+
 const PI=3.14159265;
 function closeCam(n) {
     var el = document.querySelector("#cam"+n);
     var old = el.getAttribute("rotation");
-    //alert(dumps(old));
     
     old.x *= PI/180.0;
     old.y *= PI/180.0;
@@ -265,32 +264,44 @@ function cycleCam() {
     openCam(activeCam);
 }
 
-/*
-function cycleCam_old() {
-    activeCam++;
-    activeCam %= camCount;
-    //yes there's a better algorithm for this but I want there to be no mistaking....what if 2 actives?  
-    //bugbug cache or improve
-    for(let ii=0; ii<camCount; ii++) {
-	var el=document.querySelector("#cam"+ii);
-	if (ii===activeCam){
-	    el.setAttribute("camera", {'active': true } );
-	    el.setAttribute("look-controls",{});
-	    el.setAttribute("wasd-controls",{});
-	}else{
-	    el.setAttribute("camera", {'active': false } );
-	    el.removeAttribute("look-controls");
-	    el.removeAttribute("wasd-controls");
-	}
-    }
-}*/
 
+let zip=0;
+function zipNow(){
+    zip=1;
+    //bugbug didn't work
+}
+
+const vy=0.1;
+function rise(){
+    let el=getActiveCam()
+    let pos=el.getAttribute("position");
+    pos.y+=vy;
+    el.setAttribute("position",pos);
+}
+
+
+function fall(){
+    let el=getActiveCam()
+    let pos=el.getAttribute("position");
+    pos.y-=vy;
+    el.setAttribute("position",pos);
+
+}
+
+
+function getActiveCam(){
+    return  document.querySelector("#cam"+activeCam);
+}
 
 function setupKeys(){
     window.addEventListener("keydown", function(e){
-	switch(e.keyCode) {
-	case 86: alert("bugbug1147v - V pressed"); break;
-	case 67: cycleCam(); break;  // 67=c
+	let c=String.fromCharCode(e.keyCode).toLowerCase();
+	switch(c) {
+	case 'v': alert("bugbug1147v - V pressed"); break;
+	case 'c': cycleCam(); break;  // 67=c
+	case 'z': zipNow(); break;  // later = zipToDest(selectedItem)
+	case 'r': rise(); break;
+	case 'f': fall(); break;
 	default: //nothing  alert(e.keyCode);
 	}
 
@@ -300,7 +311,11 @@ function setupKeys(){
 function animateFrames(numFrames,milliseconds,fn) {
     let intervalId = setInterval(
 	() => {
-	    fn(numFrames);
+	    let result=fn(numFrames);
+	    if (result==-1) {  //early termination request
+		numFrames=0;
+		fn(0);
+	    }
 	    if (--numFrames<=0) clearInterval(intervalId);
 	}
 	,milliseconds
@@ -342,7 +357,8 @@ function startUser() {
     setTimeout( (_ev)=>{
 	//ENTER user...10 frames, 300ms each, 
 	animateFrames( 20, 300, (n) => {
-	    cam0.setAttribute( "position" , "-1 1.6 " + (n*10-9) );
+	    if (zip==1) return -1; //early terminate animation on zip
+	    cam0.setAttribute( "position" , "-1 1.6 " + (n*7+45) );
 	});
     },3000);
 }

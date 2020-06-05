@@ -52,7 +52,13 @@
 	<img src="images/unmute.png" id="unmuteButton" crossorigin="anonymous">
 	<img src="images/donate_small.png" id="donateButton" width="75" height="48" crossorigin="anonymous">
 
-	<a-mixin id="pillar" material="opacity:0.6; color:black; roughness:0; metalicity:1" geometry="primitive:box; color:gray; width:8; depth:2; height:16"></a-mixin>
+	<a-mixin id="pillar" material="opacity:0.6; color:black; roughness:0; metalness:1" geometry="primitive:box; color:gray; width:8; depth:2; height:16"></a-mixin>
+
+	<a-mixin id="eqled"
+		 geometry="primitive:plane; width:0.14; height:0.04"
+		 material="color:yellow; opacity: 0.2" 
+		 ></a-mixin>
+	
       </a-assets>
 
       <!--#7BD    457-->
@@ -97,8 +103,9 @@
       		  <a-entity text="value:cam2-blimp; width:2; align:center; color:#911; opacity:0.4 " position="-1.2 -0.7 -1"  ></a-entity>
       </a-entity>
 
-      <a-entity class="secCam" id="cam3" camera="active: false"	position="0 100 -170" rotation="0 180 0" >
-	<a-entity text="value:cam3-broken; width:2; align:center; color:#911; opacity:0.4 " position="-1.2 -0.7 -1"  ></a-entity>
+      <a-entity class="secCam" id="cam3" camera="active: false"	position="-10 1.7 -35" rotation="0 180 0" >
+	<a-entity text="value:cam3-pit; width:2; align:center; color:#911; opacity:0.4 " position="-1.2 -0.7 -1"  ></a-entity>
+	<a-plane position="-1 -0.5 -1" width="0.6" height="1.0" material="src: #webcam"></a-plane>
       </a-entity>
 
       
@@ -111,7 +118,7 @@
       
       <!-- building -->
       <a-entity >
-	<!-- floor -->  <a-box position="0 -0.5 0" rotation="90 0 0" width="100" height="80" depth="0.01" color="pink"
+	<!-- floor -->  <a-box position="0 -0.5 0" rotation="90 0 0" width="101" height="85" depth="0.01"
 			       material="src: #grid; repeat:100 80; transparent: true; opacity: 1.0"></a-box> 
 	<!-- back -->
 	<a-box position="0 30 -40" rotation="0 0 0" width="100" height="60" depth="0.001" color="#321">
@@ -158,20 +165,20 @@
 
 	  
  	  
-	  <a-entity text="align:left; font:exo2bold; color:#531; width:8; value:KaolinCenter"  width="20" height="2" depth="0.5"
+	  <a-entity text="align:left; font:exo2bold; color:#531; width:8; value:KaolinCenter"  width="20" height="2" depth="9.5"
 		    rotation="0 0 0" position="80 20 0"  scale="20 20 20" ></a-entity>
 	  <a-entity text="align:center; font:aileronsemibold; color:#111; width:4; 
-			  value: June 8: Scorpions\n\nJune 9: Billie Eilish\n\nJune 11: Lewis Black World Hysteria Tour"
+			  value: June 8: Scorpions\n\nJune 9: Billie Eilish\n\nJune 11: Lewis Black / World Improvement Tour"
 		    width="30" height="2" depth="0.5" rotation="0 0 0" position="0 -14 0" scale="20 10 10" ></a-entity>
 	</a-box> 
 
 	<!-- left --><a-box position="-50 30 0" rotation="0 90 0" width="80" height="60" depth="0.001" color="green"></a-box>
-	<!-- right--><a-box position="50 30 0" rotation="0 90 0" width="80" height="60" depth="0.001" color="navy"></a-box>
+	<!-- right--><a-box position="50 30 0" rotation="0 90 0" width="80" height="60" depth="0.001" color="green"></a-box>
 
 	<!-- ceiling-->
 	<a-box position="0 60 0" rotation="90 0 0" width="100" height="100" depth="0.001" color="darkgray">
 	</a-box>
-	<a-image id="logo" position="0 -80 0" rotation="0 90 0"  src="images/panjeaLogo_white.png" width="20" height="20"></a-image>
+	<a-image id="logo" position="0 80 0" rotation="0 90 0"  src="images/panjeaLogo_white.png" width="20" height="20"></a-image>
 
 
 
@@ -182,11 +189,12 @@
 
       
       
-      <a-entity controlPanel type="plane" color="pink" height="5" width="5" opacity="1" position="0 0 -39.9" rotation="0 0 0">
+      <bugbuga-entity controlPanel  color="pink" geometry="primitive:box" depth="0.1" height="5" width="5" opacity="1" position="0 0 -39.9" rotation="0 0 0"><bugbug neededq />
+      </bugbuga-entity>
+      
 
-	
-	
-	<!--a-entity camblock >
+
+      <!--a-entity camblock >
 	    
 	    <a-image id="muteButtons" position="-2.8 3.5 0" src="#unmuteButton"
 		     width="0.2" height="0.2" link="href: javascript:muteVideo()"></a-image>
@@ -198,11 +206,11 @@
 	
 	
 	<!-- tips/donations -->
-	<a-plane position="-20 30 0.1" width="1.70" height="0.6" color="magenta" opacity="1.0" bugbugdiditworkwhynot>
-	  <a-plane id="donateButtonPlane" position="0.5 0.1 0" color="green" height="0.22" width="0.55" link="href: javascript:openDialog('donateFormDiv')">
-	    <a-text id="donateButton" value="Donate" align="center" color="white" width="3"></a-text>
+	<a-plane rotation="0 75 0" scale="15 15 15"  position="-35 15 0" width="2.70" height="1.6" color="magenta" opacity="1.0" bugbugdiditworkwhynot>
+	  <a-plane id="donateButtonPlane" position="0.5 0.1 0.1" color="green" height="0.22" width="0.55" link="href: javascript:openDialog('donateFormDiv')">
+	    <a-text id="donateButton" value="Stare Or Click Here\nto donate $10" align="center" color="white" width="3"></a-text>
 	  </a-plane>
-	  <a-plane id="donateTotalPlane" position="-0.25 -0.15 0" color="pink" height="0.05" width="1"></a-plane>
+	  <a-planebugbug id="donateTotalPlane" position="-0.25 -0.15 0" color="pink" height="0.05" width="1"></a-planebugbug>
 	  <a-text id="donateTotalAmount" position="-0.75 -0.25 0" color="white" width="2" value="$2500 Raised"></a-text>
 	  <a-text id="donateTotalGoal" position="0.45 -0.25 0" color="white" width="2" value="$5000 Goal"></a-text>
 
@@ -213,100 +221,107 @@
 	</a-plane>
 
 	
-	<!-- equalizer -->
-	<a-entity id="equalizerEntity" position="0 0 0" width="1.75" height="0.6">
-	  <a-plane id="dancingEqualizer1" position="-0.77 -0.27 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer2" position="-0.77 -0.21 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer3" position="-0.77 -0.15 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer4" position="-0.77 -0.09 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer5" position="-0.77 -0.03 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer6" position="-0.77 0.03 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer7" position="-0.77 0.09 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer8" position="-0.77 0.15 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer9" position="-0.77 0.21 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
-	  <a-plane id="dancingEqualizer10" position="-0.77 0.27 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+	<a-entity id="equalizerEntity" position="42 15 -15" scale="20 10 1" rotation="0 -90 0">
 
-	  <a-plane id="clappingEqualizer1" position="-0.55 -0.27 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer2" position="-0.55 -0.21 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer3" position="-0.55 -0.15 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer4" position="-0.55 -0.09 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer5" position="-0.55 -0.03 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer6" position="-0.55 0.03 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer7" position="-0.55 0.09 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer8" position="-0.55 0.15 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer9" position="-0.55 0.21 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
-	  <a-plane id="clappingEqualizer10" position="-0.55 0.27 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer1" position="-0.77 -0.27 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer2" position="-0.77 -0.21 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer3" position="-0.77 -0.15 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer4" position="-0.77 -0.09 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer5" position="-0.77 -0.03 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer6" position="-0.77 0.03 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer7" position="-0.77 0.09 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer8" position="-0.77 0.15 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer9" position="-0.77 0.21 0.01" ></a-plane>
+	  <a-plane mixin="eqled" id="dancingEqualizer10" position="-0.77 0.27 0.01"></a-plane>
 
-	  <a-plane id="cheeringEqualizer1" position="-0.33 -0.27 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer2" position="-0.33 -0.21 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer3" position="-0.33 -0.15 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer4" position="-0.33 -0.09 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer5" position="-0.33 -0.03 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer6" position="-0.33 0.03 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer7" position="-0.33 0.09 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer8" position="-0.33 0.15 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer9" position="-0.33 0.21 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
-	  <a-plane id="cheeringEqualizer10" position="-0.33 0.27 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
 
-	  <a-plane id="booingEqualizer1" position="-0.11 -0.27 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer2" position="-0.11 -0.21 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer3" position="-0.11 -0.15 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer4" position="-0.11 -0.09 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer5" position="-0.11 -0.03 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer6" position="-0.11 0.03 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer7" position="-0.11 0.09 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer8" position="-0.11 0.15 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer9" position="-0.11 0.21 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
-	  <a-plane id="booingEqualizer10" position="-0.11 0.27 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+	  <!--  ------------   EQ comb ------------bugbug did this work-->
+	  
 
-	  <a-plane id="singingEqualizer1" position="0.11 -0.27 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer2" position="0.11 -0.21 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer3" position="0.11 -0.15 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer4" position="0.11 -0.09 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer5" position="0.11 -0.03 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer6" position="0.11 0.03 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer7" position="0.11 0.09 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer8" position="0.11 0.15 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer9" position="0.11 0.21 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
-	  <a-plane id="singingEqualizer10" position="0.11 0.27 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+		   
+	  <a-plane mixin="eqled" id="clappingEqualizer1" position="-0.55 -0.27 0.01" color="orange"></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer2" position="-0.55 -0.21 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer3" position="-0.55 -0.15 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer4" position="-0.55 -0.09 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer5" position="-0.55 -0.03 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer6" position="-0.55 0.03 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer7" position="-0.55 0.09 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer8" position="-0.55 0.15 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer9" position="-0.55 0.21 0.01" color="orange" ></a-plane>
+	  <a-plane mixin="eqled" id="clappingEqualizer10" position="-0.55 0.27 0.01" color="orange" ></a-plane>
 
-	  <a-plane id="lighterEqualizer1" position="0.33 -0.27 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer2" position="0.33 -0.21 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer3" position="0.33 -0.15 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer4" position="0.33 -0.09 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer5" position="0.33 -0.03 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer6" position="0.33 0.03 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer7" position="0.33 0.09 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer8" position="0.33 0.15 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer9" position="0.33 0.21 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
-	  <a-plane id="lighterEqualizer10" position="0.33 0.27 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer1" position="-0.33 -0.27 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer2" position="-0.33 -0.21 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer3" position="-0.33 -0.15 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer4" position="-0.33 -0.09 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer5" position="-0.33 -0.03 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer6" position="-0.33 0.03 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer7" position="-0.33 0.09 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer8" position="-0.33 0.15 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer9" position="-0.33 0.21 0.01" color="cyan" ></a-plane>
+	  <a-plane mixin="eqled" id="cheeringEqualizer10" position="-0.33 0.27 0.01" color="cyan" ></a-plane>
 
-	  <a-plane id="guitarEqualizer1" position="0.55 -0.27 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer2" position="0.55 -0.21 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer3" position="0.55 -0.15 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer4" position="0.55 -0.09 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer5" position="0.55 -0.03 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer6" position="0.55 0.03 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer7" position="0.55 0.09 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer8" position="0.55 0.15 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer9" position="0.55 0.21 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
-	  <a-plane id="guitarEqualizer10" position="0.55 0.27 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer1" position="-0.11 -0.27 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer2" position="-0.11 -0.21 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer3" position="-0.11 -0.15 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer4" position="-0.11 -0.09 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer5" position="-0.11 -0.03 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer6" position="-0.11 0.03 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer7" position="-0.11 0.09 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer8" position="-0.11 0.15 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer9" position="-0.11 0.21 0.01" color="red" ></a-plane>
+	  <a-plane mixin="eqled" id="booingEqualizer10" position="-0.11 0.27 0.01" color="red" ></a-plane>
 
-	  <a-plane id="drumsEqualizer1" position="0.77 -0.27 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer2" position="0.77 -0.21 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer3" position="0.77 -0.15 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer4" position="0.77 -0.09 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer5" position="0.77 -0.03 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer6" position="0.77 0.03 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer7" position="0.77 0.09 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer8" position="0.77 0.15 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer9" position="0.77 0.21 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	  <a-plane id="drumsEqualizer10" position="0.77 0.27 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
-	</a-entity>
-	<!-- /equalizer -->
+	  <a-plane mixin="eqled" id="singingEqualizer1" position="0.11 -0.27 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer2" position="0.11 -0.21 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer3" position="0.11 -0.15 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer4" position="0.11 -0.09 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer5" position="0.11 -0.03 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer6" position="0.11 0.03 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer7" position="0.11 0.09 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer8" position="0.11 0.15 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer9" position="0.11 0.21 0.01" color="lime" ></a-plane>
+	  <a-plane mixin="eqled" id="singingEqualizer10" position="0.11 0.27 0.01" color="lime" ></a-plane>
 
+	  <a-plane mixin="eqled" id="lighterEqualizer1" position="0.33 -0.27 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer2" position="0.33 -0.21 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer3" position="0.33 -0.15 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer4" position="0.33 -0.09 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer5" position="0.33 -0.03 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer6" position="0.33 0.03 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer7" position="0.33 0.09 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer8" position="0.33 0.15 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer9" position="0.33 0.21 0.01" color="green" ></a-plane>
+	  <a-plane mixin="eqled" id="lighterEqualizer10" position="0.33 0.27 0.01" color="green" ></a-plane>
+
+	  <a-plane mixin="eqled" id="guitarEqualizer1" position="0.55 -0.27 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer2" position="0.55 -0.21 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer3" position="0.55 -0.15 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer4" position="0.55 -0.09 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer5" position="0.55 -0.03 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer6" position="0.55 0.03 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer7" position="0.55 0.09 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer8" position="0.55 0.15 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer9" position="0.55 0.21 0" color="teal" ></a-plane>
+	  <a-plane mixin="eqled" id="guitarEqualizer10" position="0.55 0.27 0" color="teal" ></a-plane>
+
+	  <a-plane mixin="eqled" id="drumsEqualizer1" position="0.77 -0.27 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer2" position="0.77 -0.21 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer3" position="0.77 -0.15 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer4" position="0.77 -0.09 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer5" position="0.77 -0.03 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer6" position="0.77 0.03 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer7" position="0.77 0.09 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer8" position="0.77 0.15 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer9" position="0.77 0.21 0" color="magenta" ></a-plane>
+	  <a-plane mixin="eqled" id="drumsEqualizer10" position="0.77 0.27 0" color="magenta" ></a-plane
+	<!-- /equalizer main -->
+
+<!--bugbug mediumsize project to build arrays of things and make them lightable etc but shoudl do it to cut repetitive code
+ (same with icons) -->
+	
 	<!-- equalizer icons -->
-	<a-entity id="equalizerCircles" position="-3.98 1.1 0" width="1.75" height="0.25">
+	<a-entity id="equalizerCircles" position="0 -0.5 0" width="1.75" height="0.25">
 	  <a-circle id="dancingCircle" position="-0.77 0 0" radius="0.1" color="yellow"
 		    event-set__enter="_event: mouseenter; _target: #dancingText; visible: true"
 		    event-set__leave="_event: mouseleave; _target: #dancingText; visible: false"
@@ -401,8 +416,6 @@
 	<a-image id="user7" position="-1.2 0.7 0" rotation="-10 -140 0" src="webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 4')"></a-image>
 	<a-image id="user6" position="-0.7 0.7 0" rotation="-10 -140 0" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 5')"></a-image>
 
-	<!-- middle middle -->
-	<a-plane position="0 0.45 0" width="0.6" height="1.0" material="src: #webcam"></a-plane>
 
 	<!-- top right -->
 	<a-image id="user14" position="0.7 0.7 0" rotation="10 140 0" src="webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 1')"></a-image>

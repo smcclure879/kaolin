@@ -208,6 +208,25 @@ function prepCams() {
     camCount =cams.length;
 }
 
+
+
+function flip(){
+    let el=getActiveCam()    
+    let old = el.getAttribute("rotation");
+    if (!old) return;
+    let lc=el.components['look-controls'];
+    if (!lc.pitchObject) return;
+
+    old.y += 180;
+    
+    //don't need   old.x *= PI/180.0;
+    old.y *= PI/180.0;
+    //not supp     old.z *= PI/180.0; 
+
+    //don't need ....lc.pitchObject.rotation.x = old.x;
+    lc.yawObject.rotation.y = old.y;     //z not supp.
+}
+
 function openCam(n) {
     var el = document.querySelector("#cam"+n);
     var old = el.oldOrientation;  //bugbug is this anywhere else?
@@ -289,6 +308,7 @@ function fall(){
 }
 
 
+
 function getActiveCam(){
     return  document.querySelector("#cam"+activeCam);
 }
@@ -297,7 +317,7 @@ function setupKeys(){
     window.addEventListener("keydown", function(e){
 	let c=String.fromCharCode(e.keyCode).toLowerCase();
 	switch(c) {
-	case 'v': alert("bugbug1147v - V pressed"); break;
+	case 'v': flip(); break;
 	case 'c': cycleCam(); break;  // 67=c
 	case 'z': zipNow(); break;  // later = zipToDest(selectedItem)
 	case 'r': rise(); break;

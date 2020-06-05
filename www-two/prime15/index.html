@@ -40,6 +40,44 @@
   <body>
 
 
+    <script>
+      AFRAME.registerComponent("fire",{
+      init: function() {
+
+      },
+      tick: function(time,timeDelta) {
+
+        
+        //if (timeDelta<10 || timeDelta>60) return;
+	var t =Math.floor(time)%57;
+	if (!t%2 || !t%3) return;
+	
+	if(!this.el.object3D) return;
+	if(!this.el.object3D.rotation) return;
+	
+	
+	this.el.object3D.rotation.x = t/67;
+	this.el.object3D.rotation.y = t/87;
+	this.el.object3D.rotation.z = t/57;
+	this.el.object3D.scale.y = t/8+4;
+	this.el.object3D.scale.x = t/13 ;
+	this.el.object3D.scale.z = t/13.51 ;
+	
+
+	/*
+	this.el.object3D.rotation.x = timeDelta/13.5 
+	this.el.object3D.rotation.y = timeDelta/13 - 0.5;      
+	this.el.object3D.scale.x = timeDelta/13 ;
+	this.el.object3D.scale.z = timeDelta/13.5;
+	this.el.object3D.scale.y = 5;
+	*/
+	
+
+      }
+      }
+      );
+    </script>
+
     <a-scene light="defaultLightsEnabled: false" cursor="rayOrigin: mouse">
 
 
@@ -402,10 +440,27 @@
 		  <a-image id="arrowRight" position="3.1 0.6 0" link="href: javascript:scrollSnapshots('right')" src="images/arrow_right.png" width="0.2" height="0.2"></a-image>
 		  -->
 	
-	<a-image id="user1"  position="-3.8 1.6 2"  rotation="270 10 2" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 1')"></a-image>
+
+
+	<a-image id="user1"  position="-3.8 1.6 1"  rotation="0 10 2" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 1')">
+	  <a-entity scale="0.01 0.02 0.01"   position="0 0.4 0" > 
+	    <a-tetrahedron fire  material="color:yellow; emissive:#fb7; emissiveIntensity:2"></a-tetrahedron>
+	  </a-entity>
+	  
+      </a-image>
+
+
+
+
 	<a-image id="user2" position="-3.7 1.5 2" rotation="10 30 5" src="webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 2')"></a-image>
 	
-	<a-image id="user3" position="-1.7 0.7 0" src="webcamThumbs/user3_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 3')"></a-image>
+	<a-image id="user3" position="-1.7 0.7 0" src="webcamThumbs/user3_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 3')">
+	  <a-entity scale="0.01 0.02 0.01"   position="0 0.4 0" > 
+	    <a-tetrahedron fire  material="color:yellow; emissive:#fb7; emissiveIntensity:2"></a-tetrahedron>
+	  </a-entity>
+	</a-image>
+
+	
 	<a-image id="user4" position="-1.2 0.7 0" src="webcamThumbs/user4_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 4')"></a-image>
 	<a-image id="user5" position="-0.7 0.7 0" src="webcamThumbs/user5_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 5')"></a-image>
 
@@ -420,7 +475,11 @@
 	<!-- top right -->
 	<a-image id="user14" position="0.7 0.7 0" rotation="10 140 0" src="webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 1')"></a-image>
 	<a-image id="user13" position="1.2 0.7 0" rotation="10 140 0" src="webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 2')"></a-image>
-	<a-image id="user11" position="1.7 0.7 0" rotation="10 140 0" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 3')"></a-image>
+	<a-image id="user11" position="1.7 0.7 0" rotation="10 140 0" src="webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 3')">
+	  <a-entity scale="0.01 0.02 0.01"   position="0 0.4 0" > 
+	    <a-tetrahedron fire  material="color:yellow; emissive:#fb7; emissiveIntensity:2"></a-tetrahedron>
+	  </a-entity>
+	</a-image>
 	<a-image id="user15" position="2.2 0.7 0" rotation="10 140 0" src="webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 4')"></a-image>
 	<a-image id="user12" position="2.7 0.7 0" rotation="10 140 0" src="webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 5')"></a-image>
 

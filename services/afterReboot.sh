@@ -5,4 +5,6 @@ screen -dmS sig4k  bash -c "cd /root/gitstuff/kaolin/services/signal; echo sig2-
 screen -dmS sig5k  bash -c "cd /root/gitstuff/kaolin/services/signal; echo sigRoom-in; nodejs signal-rooms.node.js 5000; echo sigRoom-out;exec bash"
 nginx -s reload
 
+screen -list
+
 

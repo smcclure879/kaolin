@@ -134,9 +134,29 @@ const addFakeUsers = ()=>{
 
 }
 
+const addScreen = ()=>{
+    let elem = document.createElement("div");
+    elem.setAttribute("id","one");
+    elem.setAttribute("align","center");
+    elem.setAttribute("style","position:absolute; width:80%; height:50%;left:10%;top:10%;background-color:black;z-index:1");
+    mainCanvas.appendChild(elem);
+
+    elem.innerHTML=`
+      <iframe id="theVid" align="center" width="650" height="240"
+	      src="https://youtube.com/embed/WX36hA85MeM?t=32940&rel=1&autoplay=1&loop=1&mute=1"
+	      frameborder="0" allow="accelerometer; autoplay; encrypted-media;"
+	      allowfullscreen>
+      </iframe>`;
+
+    
+
+}
+
+
 const startup = () => {
     mainCanvas=document.querySelector("#c");
     setupKeys();
+    addScreen();
     addFakeUsers();
     mainCanvas.focus();
     redraw();

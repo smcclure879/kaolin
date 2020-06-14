@@ -36,8 +36,8 @@ const redraw = ()=>{
 	let canvasHeight=500;
 	let left   = canvasWidth/2  + (item.x - x)/dz*10;
 	let bottom = canvasHeight*1/6 + dz*5 + (item.y - y)/dz*5;
-	let w = item.w / dz ;
-	let h = item.h / dz ;
+	let w = item.w / dz *2 ;
+	let h = item.h / dz *2 ;
 
 	let s=item.elem.style;
 	//bugbug get consts on resize, compare to actual main-div size
@@ -138,7 +138,7 @@ const addScreen = ()=>{
     let elem = document.createElement("div");
     elem.setAttribute("id","one");
     elem.setAttribute("align","center");
-    elem.setAttribute("style","position:absolute; width:80%; height:50%;left:10%;top:10%;background-color:black;z-index:1");
+    elem.setAttribute("style","position:absolute; width:80%; height:50%;top:10%background-color:black;z-index:1;");
     mainCanvas.appendChild(elem);
 
     elem.innerHTML=`
@@ -148,6 +148,7 @@ const addScreen = ()=>{
 	      allowfullscreen>
       </iframe>`;
 
+    items.push({elem:elem, x:-1000, y:0, z:800, w:1024, h:480});
     
 
 }

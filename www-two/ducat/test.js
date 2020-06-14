@@ -148,7 +148,7 @@ const addScreen = ()=>{
 	      allowfullscreen>
       </iframe>`;
 
-    items.push({elem:elem, x:-1000, y:0, z:800, w:1024, h:480});
+    items.push({elem:elem, x:-1200, y:0, z:800, w:1024, h:480});
     
 
 }

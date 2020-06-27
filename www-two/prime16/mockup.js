@@ -68,7 +68,7 @@ function updateSnapshots ()
     for (j=1; j<=countUsers; j++) {
 	thisUserSeries = setUserSeries(j);
 	var snapshot = document.getElementById("user" + j);
-	snapshot.setAttribute("src", "/webcamThumbs/user" + thisUserSeries + "_" + currentSnapshot + ".jpg");
+	snapshot.setAttribute("src", "webcamThumbs/user" + thisUserSeries + "_" + currentSnapshot + ".jpg");
     }
 
     timerSnapshot = setTimeout("updateSnapshots()", 2000);
@@ -208,13 +208,32 @@ function prepCams() {
     camCount =cams.length;
 }
 
+
+
+/*
+    let el=getActiveCam()    
+    let old = el.getAttribute("rotation");
+    if (!old) return;
+    let lc=el.components['look-controls'];
+    if (!lc.pitchObject) return;
+
+    old.y += 180;
+    
+    //don't need   old.x *= PI/180.0;
+    old.y *= PI/180.0;
+    //not supp     old.z *= PI/180.0; 
+
+    //don't need ....lc.pitchObject.rotation.x = old.x;
+    lc.yawObject.rotation.y = old.y;     //z not supp.
+}
+*/
+
 function openCam(n) {
     var el = document.querySelector("#cam"+n);
     var old = el.oldOrientation;  //bugbug is this anywhere else?
     
     el.setAttribute("camera", {'active': true } );
     el.setAttribute("look-controls",{});
-    el.setAttribute("wasd-controls",{});
     
     if (!el || !el.components['look-controls']) {
 	alert("bugbug0814r");
@@ -224,22 +243,18 @@ function openCam(n) {
     let lc=el.components['look-controls'];
     if (!lc.pitchObject) return;
     if (!old) return;
-    
-    //bugbug does this need to be in a "tick" to work????--no...so goto tick and remove it all?  no keep for hud? bugbug
-
-    
+        
     lc.pitchObject.rotation.x = old.x;
     lc.yawObject.rotation.y = old.y;     //0.001 * time;
     //no supported....lc.rollObject.rotation.z = old.z;
         
 }
 
-//bugbug all of this angle repointing (rotation) doesn't work as advertised.
+
 const PI=3.14159265;
 function closeCam(n) {
     var el = document.querySelector("#cam"+n);
     var old = el.getAttribute("rotation");
-    //alert(dumps(old));
     
     old.x *= PI/180.0;
     old.y *= PI/180.0;
@@ -253,7 +268,7 @@ function closeCam(n) {
     el.oldOrientation = old;
     el.setAttribute("camera", {'active': false } );
     el.removeAttribute("look-controls");
-    el.removeAttribute("wasd-controls");
+    //el.removeAttribute("wasd-controls");
 }
 
 
@@ -265,90 +280,172 @@ function cycleCam() {
     openCam(activeCam);
 }
 
-/*
-function cycleCam_old() {
-    activeCam++;
-    activeCam %= camCount;
-    //yes there's a better algorithm for this but I want there to be no mistaking....what if 2 actives?  
-    //bugbug cache or improve
-    for(let ii=0; ii<camCount; ii++) {
-	var el=document.querySelector("#cam"+ii);
-	if (ii===activeCam){
-	    el.setAttribute("camera", {'active': true } );
-	    el.setAttribute("look-controls",{});
-	    el.setAttribute("wasd-controls",{});
-	}else{
-	    el.setAttribute("camera", {'active': false } );
-	    el.removeAttribute("look-controls");
-	    el.removeAttribute("wasd-controls");
-	}
-    }
-}*/
 
+let zip=0;
+function zipNow(){
+    zip=1;
+    //bugbug didn't work
+}
+
+const vy=0.5;
+function rise(f){
+    let el=getActiveCam()
+    let pos=el.getAttribute("position");
+    pos.y+=vy*f;
+    el.setAttribute("position",pos);
+}
+
+
+function fall(f){
+    let el=getActiveCam()
+    let pos=el.getAttribute("position");
+    pos.y-=vy*f;
+    el.setAttribute("position",pos);
+}
+
+const rotInc=3.0; 
+function rotLeft(){
+    rotate(rotInc);
+}
+
+//bugbug did this work
+
+function rotRight(){
+    rotate(-rotInc);
+}
+
+function flip(){
+    rotate(180);
+}
+
+
+const sin=Math.sin;
+const cos=Math.cos;
+function advance(dx,dz){
+    let el=getActiveCam();
+    let rot = el.getAttribute("rotation");
+    if (!rot) return;
+    let pos = el.getAttribute("position");
+    let lc=el.components['look-controls'];
+    if (!lc.pitchObject) return;
+    let phi=rot.y * PI / 180;
+    let c= cos(phi); let s= sin(phi);
+    pos.x +=(   c*dx + s*dz  );
+    pos.z +=(  -s*dx + c*dz  );
+}
+
+function rotate(ang) {
+    let el=getActiveCam();   
+    let old = el.getAttribute("rotation");
+    if (!old) return;
+    let lc=el.components['look-controls'];
+    if (!lc.pitchObject) return;
+
+    old.y += ang;
+
+    //don't need ....lc.pitchObject.rotation.x = old.x;
+    lc.yawObject.rotation.y = old.y * PI/180.0;     //z not supp.
+}
+
+const panInc=0.30;
+function moveLeft(f){
+    advance(-panInc*f,0);
+}
+function moveRight(f){
+    advance(panInc*f,0);
+}
+const speed=0.50; 
+function moveForward(f){
+    advance(0,-speed*f);
+}
+function moveBack(f){
+    advance(0,speed*2/3*f);
+}
+
+
+function getActiveCam(){
+    return  document.querySelector("#cam"+activeCam);
+}
 
 function setupKeys(){
     window.addEventListener("keydown", function(e){
-	switch(e.keyCode) {
-	case 86: alert("bugbug1147v - V pressed"); break;
-	case 67: cycleCam(); break;  // 67=c
-	default: //nothing  alert(e.keyCode);
-	}
+	let c = String.fromCharCode(e.keyCode).toLowerCase();
+	let shiftGear = (e.shiftKey)?    5 : 1  ;
+	switch(c) {
+	case 'v': flip(); break;
+	case 'q': rotLeft(); break;
+	case 'e': rotRight(); break;
+	case 'c': cycleCam(); break;
+	case 'z': zipNow(); break;  // later = zipToDest(selectedItem)
+	case 'r': rise(shiftGear); break;
+	case 'f': fall(shiftGear); break;
+	case 'a': moveLeft(shiftGear); break;
+	case 'd': moveRight(shiftGear); break;
+	case 'w': moveForward(shiftGear); break;
+	case 's': moveBack(shiftGear); break;
 
+	default: pulse("ERRkey:"+e.keyCode);
+	}
     });
+    window.focus();
+}
+
+function pulse(text){
+    //bugbug get active camera, add dynamic text in the HUD, with timer to disappear forever.
+    //or alter text to be msg, then back to "" some seconds later
+    //alert(text); //bugbug
 }
 
 function animateFrames(numFrames,milliseconds,fn) {
     let intervalId = setInterval(
 	() => {
-	    fn(numFrames);
+	    if (zip==1) numFrames=1;
+	    let result=fn(numFrames);
 	    if (--numFrames<=0) clearInterval(intervalId);
 	}
 	,milliseconds
     );    
 }
 
-/* can remove? bugbug
-function registerRotationTick(){
-    AFRAME.registerComponent('cam1test', {
-	init: function()	{
-	    //alert("reg cam1");
-	    this.el.pleaseRotate={something:'else'};  //sentinel value....means "no" roughly
-	},
-  
-	tick: function (time, timeDelta) 	{
-	    if (!this.el.pleaseRotate) throw "bugbug1123a";
-	    if (!this.el.pleaseRotate.something=='else') throw "bugbug1125y";
-	    if (this.el.pleaseRotate.x) {
-		//alert("got one rotate x"+dumps(this.el.pleaseRotate));
-		this.el.object3D.rotation.x = this.el.pleaseRotate.x;
-		this.el.object3D.rotation.y = this.el.pleaseRotate.y;
-	    }
-	    this.el.pleaseRotate={something:'else'};  //reset  bugbug improve
-	    //didn't work
-	    //if (this.el.object3D)
-	    //this.el.object3D.rotation.x += 0.01;
 
-	}
 
-	
-    });
-}*/
 
 function startUser() {
     let cam0=document.querySelector("#cam0");
-
-    //registerRotationTick();
     
     setTimeout( (_ev)=>{
 	//ENTER user...10 frames, 300ms each, 
 	animateFrames( 20, 300, (n) => {
-	    cam0.setAttribute( "position" , "-1 1.6 " + (n*10-9) );
+	    cam0.setAttribute( "position" , "-1 1.6 " + (n*7+45) );
 	});
     },3000);
 }
 
+
+function addItem(mixin,pos,rot,parent) {
+    let kid = document.createElement('a-entity');
+    kid.mixin=mixin;
+    kid.position=pos;
+    kid.rotation=rot;
+    parent.appendChild(kid);
+}
+
+function buildDynamicWorldBits(){
+    //bugbug did this work???  NO.  
+    let world = document.querySelector("#cam1");
+    //for(let ii=-5000; ii<5000; ii+=1000) {
+    let pos=`-0.1 -0.3 -3`;
+    let rot="0 0 0";
+    addItem('fire',pos,rot,world);  //bugbug you are here where did the fire appear?
+    //}
+    
+}
+
 function startup() {
     //more here soon --ayvex
+    window.focus();
+    buildDynamicWorldBits();  //bugbug doesn't work yet
+
     enableDialogs();
     setupKeys();
     prepCams();

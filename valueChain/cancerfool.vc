@@ -1,0 +1,20 @@
+startmonth jan2018 
+initial unassigned 100_000  #initial shares in cancerfool
+grant kroaker 4
+grant averum 300  #signing and prior art
+grant ayvex  200 #signing and prior art
+grant averum 40  #to own managing AWS account
+startmonth may2018
+grant averum 80 #deal with acquiring domain name etc
+grant ayvex 120 #working demo medical analogy
+startmonth jun2018
+grant averum 1000 #general work 
+grant ayvex 1000 #general work
+startmonth may2019
+sub ayvex 14 #cash payments
+sub ayvex 14 #messed up billing
+startmonth jun2019
+grant ayvex 18 #invest new PC dedicated this value chain
+grant ayvex 120 #haskell work "jade"
+#there is probably a lot of work in this chain we forgot
+startmonth jun2020

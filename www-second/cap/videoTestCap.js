@@ -7,7 +7,7 @@ const TURN_SERVER_USERNAME = 'user';
 const TURN_SERVER_CREDENTIAL = 'pazz';
 
 
-let maybeRoom = window.location.pathname;
+let maybeRoom = '/lightblue';  //bugbug window.location.pathname;
 
 // WebRTC config: you don't have to change this for the example to work
 // If you are testing on localhost, you can just use PC_CONFIG = {}
@@ -311,11 +311,13 @@ class Kale {
 }
 
 
-let capStart = document.getElementById('capStart');
-let k = new Kale(maybeRoom,"localStream","remoteStream","log");
+//let capStart = document.getElementById('capStart');
+let k1 = new Kale(maybeRoom,"localStream","remoteStream","log");
+let k2 = new Kale(maybeRoom,"localStream2","remoteStream2","log2");
+
 
 capStart.addEventListener("click", (ev) => {
-    k.teardown();
+    //k.teardown();
     alert("bugbug-cap");
     capStart.disabled=true;
     capStop.disabled=false;

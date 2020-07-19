@@ -1,8 +1,8 @@
 //position of "self"
-let x=100; //moving 'right'
+let x=0; //moving 'right'
 let y=3; //jumping
-let z=-10; //away from stage  (band at high Z??)
-let speed=2;
+let z=-60; //away from stage  (band at high Z??)
+let speed=4;
 
 
 let mainCanvas=null;
@@ -28,20 +28,24 @@ const redrawOne = (item)=>{
 	return;//like continue
     }
     
-    let dz=(item.z-z)/10;   //minimal depth processing
+    let dz=(item.z-z+5)/10;   //minimal depth processing
     if (dz==0) dz=0.00001;
     //should be the on-resize-obtained canvas width/2 andn height/2
     let canvasWidth=1100;
     let canvasHeight=500;
+
+
     let left   = canvasWidth/2  + (item.x - x)/dz*10;
     let bottom = canvasHeight*1/6 +    dz*5     + (item.y - y)/dz*5;
     let w = item.w / dz *2 ;
     let h = item.h / dz *2 ;
+
+
     
     let s=item.elem.style;
     //bugbug get consts on resize, compare to actual main-div size
-    if (dz<0 || left<0 || left>1100 ||  bottom<-100 || bottom>800) {
-	s.visibility="hidden";
+    if (dz<0 || left<-1000 || left>1500 ||  bottom<-100 || bottom>800) {
+	s.visibility="hidden";  //bugbug remove completely
     }else{
 	s.left   = cu(left);
 	s.bottom = cu(bottom);
@@ -159,13 +163,14 @@ const addSelf = () =>{
 
 //helps draw more than zIndex !!!! (but not 100% bugbug)
 const sortItems = () => {
-    items.sort( (a,b) => { return a.z - b.z } );
-    items.forEach( (u)=>{ u.elem.style.zIndex=1000-u.z; mainCanvas.appendChild(u.elem); } );
+    items.sort( (a,b) => { return b.z - a.z } );
+    items.forEach( (u)=>{ u.elem.style.zIndex=1000+u.z; mainCanvas.appendChild(u.elem); } );
 }
 
 const addFakeUsers = ()=>{
     for (let ii=0; ii<20; ii++){
 	let e = document.createElement('div');
+	e.innerHTML=''+ii;
 	e.setAttribute('class','obj');
 	let s = e.style;
 	s['background-color']=['cyan','red','blue','brown'][ii%4];
@@ -348,10 +353,10 @@ const roomPrep = () => {
 	// document.body.style.backgroundPosition="center";
 	let e = document.createElement('div');
 	e.setAttribute('class','obj');
-	e.innerHTML="<img src='img/"+room+"0.jpg' style='position:relative' ></img>";
+	e.innerHTML="<img src='img/"+room+"0.jpg' style='object-fit:cover; position:relative; z-index:inherit' ></img>";
 	let s = e.style;
 	//s.visibility='hidden'; //not yet....look in redraw
-	photo={elem:e, z:400, x:-200, y:1540, w:2000, h:2000};
+	photo={elem:e, z:20, x:0, y:0, w:2000, h:2000};
 	items.push(photo);
     }
 

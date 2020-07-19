@@ -1,0 +1,54 @@
+
+<head>
+  <link href="https://vjs.zencdn.net/7.8.2/video-js.css" rel="stylesheet" />
+  <script src="https://vjs.zencdn.net/7.8.2/video.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/videojs-flash@2/dist/videojs-flash.min.js"></script>
+  
+  <script>
+    document.onload = (ev) => {
+        var player = videojs('my-video');
+        player.play();
+    }
+    function push(ev) {
+        var player = videojs('my-video');
+        player.play();
+    }
+  </script>
+
+</head>
+
+<body bgcolor="lightgreen">
+<input type="button" onclick="push()">button</input>
+  <!--bugbug needed?
+  <bugbug-video width="400" height="300" autoplay controls  src="rtmp://104.237.153.216/live/test" />
+
+    <source src="MY_VIDEO.mp4" type="video/mp4" />
+    <source src="MY_VIDEO.webm" type="video/webm" />
+
+
+<xxscript src="videojs.hls.min.js"></xxscript>
+-->
+  <video
+    id="my-video"    class="video-js"    controls
+    preload="auto"    width="640"    height="264"
+    poster="MY_VIDEO_POSTER.jpg"
+    data-setup='{"techorder" : ["flash","html5"] }'
+
+    x-bugbug-data-setup="{rtmp://104.237.153.216/live/test}"  >
+    
+    <source src="https://second.ayvexllc.com:222/hls/index.m3u8"
+            type="application/x-mpegur"  somethingElse="x-mpegURL????"    notes="bugbug you are here but now off to do aframe" />
+
+    <source src="rtmp://104.237.153.216/live/test"
+	    type="rtmp/mp4" />
+    
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+    
+  </video>
+
+
+  </body>

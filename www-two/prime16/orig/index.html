@@ -1,0 +1,445 @@
+
+
+<html>
+  <head>
+	<title>Panjea Live!</title>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+
+	<!-- aframe -->
+	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+
+	<!-- webRTC -->
+	<script src="/js/adapter-latest.js"></script>
+	<!-- <script src="/js/webRTC_basic.js"></script> -->
+
+	<!-- jquery -->
+	<link href="/js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" />
+	<script src="/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+	<script src="/js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+
+	<script>
+	$( function() {
+		$('#donateFormDiv').dialog({ autoOpen: false, width: 400, closeOnEscape: true});
+		$('#iconDialogDiv').dialog({ autoOpen: true, closeOnEscape: false, modal: false, height: 450, width: 280, 
+			position: { my: "right top", at: "right top", of: window },
+			beforeClose: function (event, ui) { return false; },
+			dialogClass: "notitlebar",
+			classes: {"ui-dialog": "dialogNoBorder", "ui-widget-content": "dialogNoBorder"}
+			});
+	});
+	</script>
+
+	<script src="/js/stringFunctions.js"></script>
+	<script src="mockup.js"></script>
+
+	<style>
+	.rounded {border-radius: 50% !important}
+    .noclose .ui-dialog-titlebar-close {display:none;}
+	.notitlebar .ui-dialog-titlebar {display: none;}
+	.ui-dialog.ui-widget-content {border:none;}
+	.dialogNoBorder {border:none; background-color: navy}
+	.iAmIconDiv {width: 30px; height: 30px; text-align: center; padding-top: 5px; border-radius: 50%; cursor: pointer}
+
+	.iconTitle {font-weight: bold; color: lime; font-size: 18px; font-face: Arial; margin-top: 5px; margin-bottom: 5px}
+	.tagDiv {margin-top: 10px}
+	.tagSpanOff {padding: 2px; border: 1px solid white; background-color: silver; cursor: pointer; color: black;}
+	.tagSpanOn {padding: 2px; border: 1px solid white; background-color: lime; cursor: pointer; color: black;}
+	</style>
+  </head>
+
+  <body>
+	<a-scene light="defaultLightsEnabled: true" cursor="rayOrigin: mouse">
+		<a-assets timeout="10000">
+			<video width="128" height="128" id="videoFile" material="npot: true" autoplay loop="true" src="/media/halseyDrumVideo.mp4" ></video>
+			<video id="webcam" playsinline></video>
+			<img src="/images/grid_floor.png" id="grid" crossorigin="anonymous">
+			<img src="/images/mute.png" id="muteButton" crossorigin="anonymous">
+			<img src="/images/unmute.png" id="unmuteButton" crossorigin="anonymous">
+			<img src="/images/donate_small.png" id="donateButton" width="75" height="48" crossorigin="anonymous">
+		</a-assets>
+
+		<a-entity light="type: ambient; color: #fff"></a-entity>
+		<a-box position="0 4 -8" rotation="0 0 0" width="16" height="8" depth="0.001" color="black"></a-box><!-- front -->
+		<a-box position="-8 4 0" rotation="0 90 0" width="16" height="8" depth="0.001" color="navy"></a-box><!-- left -->
+		<a-box position="8 4 0" rotation="0 90 0" width="16" height="8" depth="0.001" color="navy"></a-box><!-- right -->
+		<a-box position="0 8 0" rotation="90 0 0" width="16" height="16" depth="0.001" color="orange"></a-box><!-- ceiling -->
+		<!-- <a-sky color="#7EC0eE" material="src: #grid; repeat:100 100; transparent: true; opacity: 0.75"></a-sky> -->
+
+		<a-box position="0 0 -8" rotation="90 0 0" width="16" height="16"  depth="0.001" color="cyan"
+			material="src: #grid; repeat:100 100; transparent: true; opacity: 0.75"></a-box> <!-- floor -->
+
+		<a-video id="vid" play="false" autoplay="false" position="0 4 -7.9" src="#videoFile" width="13" height="7.3"></a-video>
+		<a-image id="logo" position="-3.5 4.0 -3" src="/images/panjeaLogo_white.png" width="0.9" height="0.3"></a-image>
+		<a-image id="camera1" position="-2.8 3.0 -3" src="/images/videoCamera1_green.png" width="0.2" height="0.2"></a-image>
+		<a-image id="camera2" position="-2.8 2.8 -3" src="/images/videoCamera2.png" width="0.2" height="0.2"></a-image>
+		<a-image id="camera3" position="-2.8 2.6 -3" src="/images/videoCamera3.png" width="0.2" height="0.2"></a-image>
+		<a-image id="muteButtons" position="-2.8 3.5 -3" src="#unmuteButton" width="0.2" height="0.2" link="href: javascript:muteVideo()"></a-image>
+
+		<a-image id="arrowLeft" position="-3.1 0.6 -3" link="href: javascript:scrollSnapshots('left')" src="/images/arrow_left.png" width="0.2" height="0.2" link="href: https://www.cnn.com"></a-image>
+		<a-image id="arrowRight" position="3.1 0.6 -3" link="href: javascript:scrollSnapshots('right')" src="/images/arrow_right.png" width="0.2" height="0.2"></a-image>
+
+		<!-- top left -->
+		<a-image id="user1"  position="-2.7 0.7 -3" src="/webcamThumbs/user1_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 1')"></a-image>
+		<a-image id="user2" position="-2.2 0.7 -3" src="/webcamThumbs/user2_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 2')"></a-image>
+		<a-image id="user3" position="-1.7 0.7 -3" src="/webcamThumbs/user3_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 3')"></a-image>
+		<a-image id="user4" position="-1.2 0.7 -3" src="/webcamThumbs/user4_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 4')"></a-image>
+		<a-image id="user5" position="-0.7 0.7 -3" src="/webcamThumbs/user5_1.jpg" rotation="-10 -140 0" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Left 5')"></a-image>
+
+		<!-- bottom left -->
+		<a-image id="user8" position="-2.7 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 1')"></a-image>
+		<a-image id="user9" position="-2.2 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 2')"></a-image>
+		<a-image id="user10" position="-1.7 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 3')"></a-image>
+		<a-image id="user7" position="-1.2 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 4')"></a-image>
+		<a-image id="user6" position="-0.7 0.1 -3" rotation="-10 -140 0" src="/webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Left 5')"></a-image>
+
+		<!-- middle middle -->
+		<a-plane position="0 0.45 -3" width="0.6" height="1.0" material="src: #webcam"></a-plane>
+
+		<!-- top right -->
+		<a-image id="user14" position="0.7 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 1')"></a-image>
+		<a-image id="user13" position="1.2 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 2')"></a-image>
+		<a-image id="user11" position="1.7 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 3')"></a-image>
+		<a-image id="user15" position="2.2 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 4')"></a-image>
+		<a-image id="user12" position="2.7 0.7 -3" rotation="10 140 0" src="/webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Top-Right 5')"></a-image>
+
+		<!-- bottom right -->
+		<a-image id="user16" position="0.7 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user1_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 1')"></a-image>
+		<a-image id="user19" position="1.2 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user4_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 2')"></a-image>
+		<a-image id="user17" position="1.7 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user2_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 3')"></a-image>
+		<a-image id="user18" position="2.2 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user3_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 4')"></a-image>
+		<a-image id="user20" position="2.7 0.1 -3" rotation="10 140 0" src="/webcamThumbs/user5_1.jpg" width="0.3" height="0.5" link="href: javascript:connectWith('Bottom-Right 5')"></a-image>
+
+		<!-- title -->
+		<a-entity position="-3.98 3.5 -3" width="1.80" height="0.6">
+			<a-text id="mainTitle" position="0 0 0" color="white" align="center" width="4" value="Welcome to Panjea Live"></a-text>
+			<a-text id="subTitle" position="0 -0.25 0" color="white" align="center" width="3" value="Live from Steven's House!"></a-text>
+		</a-entity>
+
+		<!-- tips/donations -->
+		<a-entity position="-3.98 2.75 -3" width="1.70" height="0.6">
+			<a-plane id="donateButtonPlane" position="0.5 0.1 0" color="green" height="0.22" width="0.55" link="href: javascript:openDialog('donateFormDiv')">
+				<a-text id="donateButton" value="Donate" align="center" color="white" width="3"></a-text>
+			</a-plane>
+			<a-plane id="donateTotalPlane" position="-0.25 -0.15 0" color="green" height="0.05" width="1"></a-plane>
+			<a-text id="donateTotalAmount" position="-0.75 -0.25 0" color="white" width="2" value="$2500 Raised"></a-text>
+			<a-text id="donateTotalGoal" position="0.45 -0.25 0" color="white" width="2" value="$5000 Goal"></a-text>
+			<a-plane id="donateBoardPlane" position="0 -0.45 0" color="green" height="0.15" width="1.70">
+				<a-text id="donateBoardText" value="John donated $1500" align="center" color="white" width="2"></a-text>
+			</a-plane>
+		</a-entity>
+
+		<!-- equalizer -->
+		
+					<a-entity id="equalizerEntity" position="-3.98 1.54 -3" width="1.75" height="0.6">
+			<a-plane id="dancingEqualizer1" position="-0.77 -0.27 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer2" position="-0.77 -0.21 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer3" position="-0.77 -0.15 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer4" position="-0.77 -0.09 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer5" position="-0.77 -0.03 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer6" position="-0.77 0.03 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer7" position="-0.77 0.09 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer8" position="-0.77 0.15 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer9" position="-0.77 0.21 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+			<a-plane id="dancingEqualizer10" position="-0.77 0.27 0" width="0.14" height="0.04" color="yellow" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="clappingEqualizer1" position="-0.55 -0.27 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer2" position="-0.55 -0.21 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer3" position="-0.55 -0.15 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer4" position="-0.55 -0.09 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer5" position="-0.55 -0.03 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer6" position="-0.55 0.03 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer7" position="-0.55 0.09 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer8" position="-0.55 0.15 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer9" position="-0.55 0.21 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+			<a-plane id="clappingEqualizer10" position="-0.55 0.27 0" width="0.14" height="0.04" color="orange" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="cheeringEqualizer1" position="-0.33 -0.27 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer2" position="-0.33 -0.21 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer3" position="-0.33 -0.15 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer4" position="-0.33 -0.09 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer5" position="-0.33 -0.03 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer6" position="-0.33 0.03 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer7" position="-0.33 0.09 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer8" position="-0.33 0.15 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer9" position="-0.33 0.21 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+			<a-plane id="cheeringEqualizer10" position="-0.33 0.27 0" width="0.14" height="0.04" color="cyan" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="booingEqualizer1" position="-0.11 -0.27 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer2" position="-0.11 -0.21 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer3" position="-0.11 -0.15 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer4" position="-0.11 -0.09 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer5" position="-0.11 -0.03 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer6" position="-0.11 0.03 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer7" position="-0.11 0.09 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer8" position="-0.11 0.15 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer9" position="-0.11 0.21 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+			<a-plane id="booingEqualizer10" position="-0.11 0.27 0" width="0.14" height="0.04" color="red" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="singingEqualizer1" position="0.11 -0.27 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer2" position="0.11 -0.21 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer3" position="0.11 -0.15 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer4" position="0.11 -0.09 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer5" position="0.11 -0.03 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer6" position="0.11 0.03 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer7" position="0.11 0.09 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer8" position="0.11 0.15 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer9" position="0.11 0.21 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+			<a-plane id="singingEqualizer10" position="0.11 0.27 0" width="0.14" height="0.04" color="lime" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="lighterEqualizer1" position="0.33 -0.27 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer2" position="0.33 -0.21 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer3" position="0.33 -0.15 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer4" position="0.33 -0.09 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer5" position="0.33 -0.03 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer6" position="0.33 0.03 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer7" position="0.33 0.09 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer8" position="0.33 0.15 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer9" position="0.33 0.21 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+			<a-plane id="lighterEqualizer10" position="0.33 0.27 0" width="0.14" height="0.04" color="green" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="guitarEqualizer1" position="0.55 -0.27 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer2" position="0.55 -0.21 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer3" position="0.55 -0.15 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer4" position="0.55 -0.09 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer5" position="0.55 -0.03 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer6" position="0.55 0.03 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer7" position="0.55 0.09 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer8" position="0.55 0.15 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer9" position="0.55 0.21 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+			<a-plane id="guitarEqualizer10" position="0.55 0.27 0" width="0.14" height="0.04" color="teal" material="opacity: 0.2"></a-plane>
+
+			<a-plane id="drumsEqualizer1" position="0.77 -0.27 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer2" position="0.77 -0.21 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer3" position="0.77 -0.15 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer4" position="0.77 -0.09 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer5" position="0.77 -0.03 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer6" position="0.77 0.03 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer7" position="0.77 0.09 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer8" position="0.77 0.15 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer9" position="0.77 0.21 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+			<a-plane id="drumsEqualizer10" position="0.77 0.27 0" width="0.14" height="0.04" color="magenta" material="opacity: 0.2"></a-plane>
+		</a-entity>
+		<!-- /equalizer -->
+
+		<!-- equalizer icons -->
+		<a-entity id="equalizerCircles" position="-3.98 1.1 -3" width="1.75" height="0.25">
+			<a-circle id="dancingCircle" position="-0.77 0 0" radius="0.1" color="yellow"
+					event-set__enter="_event: mouseenter; _target: #dancingText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #dancingText; visible: false"
+					link="href: javascript:setIamIcon('dancing')">
+				<a-ring id="dancingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="dancingIcon" src="/images/dancing.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="clappingCircle" position="-0.55 0 0" radius="0.1" color="gold"
+					event-set__enter="_event: mouseenter; _target: #clappingText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #clappingText; visible: false"
+					link="href: javascript:setIamIcon('clapping')">
+				<a-ring id="clappingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="clappingIcon" src="/images/clapping.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="cheeringCircle" position="-0.33 0 0" radius="0.1" color="cyan"
+					event-set__enter="_event: mouseenter; _target: #cheeringText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #cheeringText; visible: false"
+					link="href: javascript:setIamIcon('cheering')">
+				<a-ring id="cheeringRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="cheeringIcon" src="/images/cheering.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="booingCircle" position="-0.11 0 0" radius="0.1" color="red"
+					event-set__enter="_event: mouseenter; _target: #booingText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #booingText; visible: false"
+					link="href: javascript:setIamIcon('booing')">
+				<a-ring id="booingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="booingIcon" src="/images/booing.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="singingCircle" position="0.11 0 0" radius="0.1" color="lime"
+					event-set__enter="_event: mouseenter; _target: #singingText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #singingText; visible: false"
+					link="href: javascript:setIamIcon('singing')">
+				<a-ring id="singingRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="singingIcon" src="/images/singing.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="lighterCircle" position="0.33 0 0" radius="0.1" color="green"
+					event-set__enter="_event: mouseenter; _target: #lighterText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #lighterText; visible: false"
+					link="href: javascript:setIamIcon('lighter')">
+				<a-ring id="lighterRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="lighterIcon" src="/images/lighter.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="guitarCircle" position="0.55 0 0" radius="0.1" color="teal"
+					event-set__enter="_event: mouseenter; _target: #guitarText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #guitarText; visible: false"
+					link="href: javascript:setIamIcon('guitar')">
+				<a-ring id="guitarRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="guitarIcon" src="/images/guitar.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+			<a-circle id="drumsCircle" position="0.77 0 0" radius="0.1" color="magenta"
+					event-set__enter="_event: mouseenter; _target: #drumsText; visible: true"
+					event-set__leave="_event: mouseleave; _target: #drumsText; visible: false"
+					link="href: javascript:setIamIcon('drums')">
+				<a-ring id="drumsRing" color="white" radius-inner="0.09" radius-outer="0.12" visible="false"></a-ring>
+				<a-image id="drumsIcon" src="/images/drums.png" height="0.14" width="0.14"></a-image>
+			</a-circle>
+
+			<a-text id="dancingText" value="I am Dancing" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: yellow"></a-text>
+			<a-text id="clappingText" value="I am Clapping" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: gold"></a-text>
+			<a-text id="cheeringText" value="I am Cheering" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: cyan"></a-text>
+			<a-text id="booingText" value="I am Booing" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: red"></a-text>
+			<a-text id="singingText" value="I am Singing" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: lime"></a-text>
+			<a-text id="lighterText" value="I am holding up a lighter" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1.0; height: 0.14" material="color: green"></a-text>
+			<a-text id="guitarText" value="I am playing Air Guitar" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: teal"></a-text>
+			<a-text id="drumsText" value="I am Drumming" align="center" color="black" visible="false" width="2" position="0.73 -0.10 0.55" geometry="primitive: plane; width: 1; height: 0.14" material="color: magenta"></a-text>
+		</a-entity>
+		<!-- /equalizer icons -->
+
+		
+    </a-scene>
+
+<div id="donateFormDiv" title="Donate" style="background-color: silver; border: 3px solid white !important; font-size: 12px; font-face: Arial;">
+	<form name="formDonate">
+	$<input type="text" id="donateAmount" style="width: 150px" placeholder="Amount"><br />
+	<select id="donatePurpose" style="margin-top: 10px">
+	 <option value="">-- PURPOSE --</option>
+	 <option value="">Support this Artist</option>
+	 <option value="">Hunger</option>
+	 <option value="">Housing</option>
+	 <option value="">Porsche</option>
+	 <option value="">(None)</option>
+	</select><br />
+	<textarea id="donateComment" style="width: 200px; height: 80px; margin-top: 10px" placeholder="Optional Comment"></textarea><br />
+	<select id="donateDisplay" style="margin-top: 10px">
+	 <option value="">-- VISUAL --</option>
+	 <option value="">Throw a Beer</option>
+	 <option value="">Shout a Comment</option>
+	 <option value="">Hearts</option>
+	 <option value="">Hugs</option>
+	 <option value="">(None)</option>
+	</select><br />
+	<input type="button" value="Donate Now" style="margin-top: 10px" onClick="closeDialog('donateFormDiv')">
+	</form>
+</div>
+
+<div id="iconDialogDiv" style="background-color: navy !important; color: white">
+	<table border="0" cellspacing="0" cellpadding="0" style="padding-top: 3px; padding-bottom: 3px; border: 1px solid silver" width="100%">
+	<tr align="center">
+		<td width="25%"><a href="javascript:showIconDiv('chat')" title="View &amp; Submit Chat" onMouseOver="hoverIcon('chat')" onMouseOut="unhoverIcon('chat')"><img src="/images/chat_lime.png" id="chatIcon"></a></td>
+		<td width="25%"><a href="javascript:showIconDiv('tag')" title="View &amp; Manage Your Tags" onMouseOver="hoverIcon('tag')" onMouseOut="unhoverIcon('tag')"><img src="/images/tag_silver.png" id="tagIcon"></a></td>
+		<td width="25%"><a href="javascript:showIconDiv('people')" title="Choose People to View" onMouseOver="hoverIcon('people')" onMouseOut="unhoverIcon('people')"><img src="/images/people_silver.png" id="peopleIcon"></a></td>
+		<td width="25%"><a href="javascript:showIconDiv('settings')" title="Privacy Settings" onMouseOver="hoverIcon('settings')" onMouseOut="unhoverIcon('settings')"><img src="/images/settings_silver.png" id="settingsIcon"></a></td>
+	</tr>
+	</table>
+
+	<div id="chatDiv">
+		<div class="iconTitle">Chat</div>
+		<div id="tabsChat" style="margin-top: -5px; color: white; height: 280px; overflow-y: scroll">
+			<p><a href="javascript:connectWith('Joe')" title="Connect with: Joe" style="text-decoration: none; color: yellow; padding: 2px; font-weight: bold">Joe</a>: This concert rocks!</p>
+			<p><a href="javascript:connectWith('bobo')" title="Connect with: bobo" style="text-decoration: none; color: lime; padding: 2px; font-weight: bold">bobo</a>: Agreed!</p>
+			<p><a href="javascript:connectWith('Zolo')" title="Connect with: Zolo" style="text-decoration: none; color: white; padding: 2px; font-weight: bold">Zolo</a>: You people suck</p>
+			<p><a href="javascript:connectWith('Yazaro')" title="Connect with: Yazaro" style="text-decoration: none; color: orange; padding: 2px; font-weight: bold">Yazaro</a>: Are you drunk?</p>
+		</div>
+
+		<table border="0" cellspacing="0" cellpadding="0">
+		<tr><td colspan="3"><input type="text" id="chatComment" style="width: 250px; margin-bottom: 3px" placeholder="Say something..." onKeyUp="updateChatMessageLength()"></td></tr>
+		<tr>
+			<td><a href="javascript:toggleEmoticons()" title="Show Emoji Options" onMouseOver="hoverIcon('emoji')" onMouseOut="unhoverIcon('emoji')"><img id="emojiIcon" src="/images/emoji_silver.png"></a></td>
+			<td align="center" style="color: white; font-size: 11px"><span id="chatMessageLength">0</span> of 255</td>
+			<td align="right"><a href="javascript:submitChat()" title="Submit Chat Message" onMouseOver="hoverIcon('submitChat')" onMouseOut="unhoverIcon('submitChat')"><img id="submitChatIcon" src="/images/submitChat_silver.png"></a></td>
+		</tr>
+		</table>
+	</div><!-- /chatDiv -->
+
+	<div id="tagDiv" style="display: none; overflow-y: scroll">
+		<div class="iconTitle">Tags</div>
+
+		<div class="tagDiv"><span class="tagSpanOn" onClick="toggleTag(this.id)" id="tag_HardCoreFans">Hard-Core Fan (25)</span></div>
+		<div class="tagDiv"><span class="tagSpanOn" onClick="toggleTag(this.id)" id="tag_Young">Young (14)</span></div>
+		<div class="tagDiv"><span class="tagSpanOff" onClick="toggleTag(this.id)" id="tag_Old">Old (17)</span></div>
+		<div class="tagDiv"><span class="tagSpanOff" onClick="toggleTag(this.id)" id="tag_Parentsw/Kids">Parents w/kids (12)</span></div>
+		<div class="tagDiv"><span class="tagSpanOn" onClick="toggleTag(this.id)" id="tag_LongTimeFans">Long-Time Fan (8)</span></div>
+
+		<div class="tagDiv">
+			<select name="tagRelation" size="1" style="font-size: 11px">
+			 <option value="">- Optional Relationship -</option>
+			 <option value="women_men">Woman Seeking Men</option>
+			 <option value="women_women">Woman Seeking Women (romantic)</option>
+			 <option value="women_women2">Woman Seeking Women (friends)</option>
+			 <option value="men_wommen">Man Seeking Women</option>
+			 <option value="men_men">Man Seeking Men (romantic)</option>
+			 <option value="men_men2">Man Seeking Men (friends)</option>
+			</select>
+		</div>
+
+		<div style="margin-top: 10px">
+			<input type="text" id="tagText" style="width: 150px" placeholder="New Tag..."> 
+			<a href="javascript:submitTag()" title="Add Tag" onMouseOver="hoverIcon('submitTag')" onMouseOut="unhoverIcon('submitTag')"><img id="submitTagIcon" src="/images/submitChat_silver.png"></a>
+		</div>
+	</div><!-- /tagDiv -->
+
+	<div id="peopleDiv" style="display: none;">
+		<div class="iconTitle">Show People</div>
+		
+		<label><input type="radio" name="showPeople" value="all" checked> Full Audience (<span id="peopleCountAll">340</span>)</label><br />
+		<label><input type="radio" name="showPeople" value="section"> My section (<span id="peopleCountSection">50</span>)</label><br />
+		<label><input type="radio" name="showPeople" value="friends"> My Friends (<span id="peopleCountFriends">18</span>)</label><br />
+		<label><input type="radio" name="showPeople" value="tags"> My Tags (<span id="peopleCountTags">27</span>)</label><br />
+		<label><input type="radio" name="showPeople" value="random"> Random (<span id="peopleCountRandom">20</span>)</label><br />
+		<input type="button" value="Update People">
+	</div><!-- /peopleDiv -->
+
+	<div id="settingsDiv" style="display: none;">
+		<div class="iconTitle">Settings</div>
+		Share my picture with:
+		<div style="margin-left: 15px; margin-bottom: 10px">
+			<label><input type="radio" id="shareMyPicture3" value="3" checked> All</label><br />
+			<label><input type="radio" id="shareMyPicture2" value="2"> Friends  &amp; Tags</label><br />
+			<label><input type="radio" id="shareMyPicture1" value="1"> Friends only</label><br />
+			<label><input type="radio" id="shareMyPicture0" value="0"> No one</label>
+		</div>
+
+		Allow to private-message me:
+		<div style="margin-left: 15px">
+			<label><input type="radio" id="shareMyPicture3" value="3" checked> All</label><br />
+			<label><input type="radio" id="shareMyPicture2" value="2"> Friends  &amp; Tags</label><br />
+			<label><input type="radio" id="shareMyPicture1" value="1"> Friends only</label><br />
+			<label><input type="radio" id="shareMyPicture0" value="0"> No one</label>
+		</div>
+
+		<p><input type="button" value="Save Settings" onClick="saveSettings()"></p>
+	</div><!-- /settingsDiv -->
+
+	<div id="connectDiv" style="display: none;">
+		<div class="iconTitle">Connect With: <span id="connectWithName"></span></div>
+		<div id="connectWithSnapshot"><img src="/webcamThumbs/user4_5.jpg" height="100" width="60"></div>
+
+		<form name="formConnect">
+		Invite to:<br />
+		<label><input type="radio" name="connectAction" value="chat" checked> Text Chat</label><br />
+		<label><input type="radio" name="connectAction" value="audio"> Audio-only Talk</label><br />
+		<label><input type="radio" name="connectAction" value="video"> Video Chat</label><br />
+		<br />
+		<textarea id="connectComment" style="width: 300px; height: 40px;"></textarea><br />
+		<input type="button" value="Send Message">
+		</form>
+	</div><!-- /connectDiv -->
+</div><!-- /iconDialogDiv -->
+
+	<script>
+	// Start the webcam stream and attach it to the video element
+	// You can also set which camera to use (front/back/etc)
+	navigator.mediaDevices.getUserMedia({audio: false, video: true})
+	  .then(stream => {
+		let $video = document.getElementById("webcam") // document.querySelector('video')
+		$video.srcObject = stream
+		$video.onloadedmetadata = () => {
+		  $video.play()
+		}
+	})
+	</script>
+
+	<script>
+	generateIconEqualizer();
+
+	</script>
+  </body>
+</html>
